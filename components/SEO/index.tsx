@@ -1,5 +1,4 @@
 import Head from "next/head";
-import constants from "app/theme/constants";
 import { useRouter } from "next/router";
 
 type SEO = {
@@ -8,6 +7,14 @@ type SEO = {
 	image?: string;
 	keywords?: string | string[];
 	pageType?: string;
+};
+
+const constants = {
+	info: {
+		title: "Trium Capital",
+		description: "",
+		url: "https://triumcapital.com.br",
+	},
 };
 
 const SEO: React.FC<SEO> = (props) => {
