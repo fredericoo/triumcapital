@@ -1,4 +1,4 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme, Theme } from "@chakra-ui/react";
 
 const buttonProps = {
 	defaultProps: {
@@ -30,6 +30,14 @@ const Heading = {
 	baseStyle: {
 		color: "gray.900",
 	},
+};
+
+export type TriumTheme = Theme & {
+	colors: {
+		brand: Record<string | number, string>;
+		positive: string;
+		negative: string;
+	};
 };
 
 const theme = extendTheme({

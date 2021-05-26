@@ -11,7 +11,7 @@ const Stocks = () => {
 	return (
 		<Box as="section" py={16}>
 			{data?.indices?.map((index: Index) => (
-				<Timeline index={index} />
+				<Timeline key={index.symbol} index={index} />
 			))}
 		</Box>
 	);

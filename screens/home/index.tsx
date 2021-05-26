@@ -1,12 +1,11 @@
 import {
 	Container,
+	Box,
 	Grid,
 	GridItem,
 	Stack,
 	Heading,
-	Text,
 	Button,
-	useToast,
 } from "@chakra-ui/react";
 import { RichText, RichTextBlock } from "prismic-reactjs";
 import { ArrowTopRight } from "app/components/Icon";
@@ -16,23 +15,11 @@ import Pillar from "./Pillar";
 import MemberCard from "./MemberCard";
 import Number from "./Number";
 import Stocks from "./Stocks";
-import { useEffect } from "react";
+import Posts from "./Posts";
 
-type HomeScreenProps = { data: Document["data"] };
+type HomeScreenProps = { data: Document["data"]; posts: Document[] };
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ data }) => {
-	const toast = useToast();
-	useEffect(() => {
-		toast({
-			id: "cookies",
-			title: "Cookies",
-			description:
-				"Utilizamos cookies para melhorar sua experiência. Ao continuar a utilizar nosso website, você concorda com seu uso.",
-			status: "info",
-			duration: null,
-			isClosable: true,
-		});
-	}, []);
+const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 	return (
 		<>
 			<Container maxW="container.lg">
@@ -46,9 +33,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data }) => {
 							<Heading as="h1" size="2xl" letterSpacing="-0.02em">
 								{RichText.asText(data.headline)}
 							</Heading>
-							<Text>
-								<RichText render={data.content} />
-							</Text>
+
+							<RichText render={data.content} />
+
 							<Button alignSelf="flex-start" rightIcon={ArrowTopRight}>
 								{data.cta}
 							</Button>
@@ -58,28 +45,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data }) => {
 			</Container>
 
 			<Stocks />
-			<Container maxW="container.lg">
-				<Grid {...gridProps} as="section" py={16}>
-					<GridItem gridColumn={{ base: "1 / -1", lg: "3 / span 8" }}>
-						<Stack spacing={8}>
-							<Heading
-								as="h2"
-								size="lg"
-								textAlign="center"
-								letterSpacing="-.02em"
-							>
-								{RichText.asText(data.headline2)}
-							</Heading>
-							<Button alignSelf="center" rightIcon={ArrowTopRight}>
-								{data.cta2}
-							</Button>
-						</Stack>
-					</GridItem>
-				</Grid>
+			<Posts data={posts} />
 
+			<Container maxW="container.lg">
 				<Grid
 					gap={gridProps.gridGap}
-					templateColumns={{ base: "1fr", md: "1fr 1fr 1fr" }}
+					templateColumns={{ base: "1fr", sm: "1fr 1fr 1fr" }}
 					rowGap={16}
 					as="section"
 					py={16}
@@ -101,13 +72,31 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data }) => {
 				</Grid>
 
 				<Grid {...gridProps} as="section" py={16}>
+					<GridItem gridColumn={{ base: "1 / -1", lg: "3 / span 8" }}>
+						<Stack spacing={8}>
+							<Heading
+								as="h2"
+								size="lg"
+								textAlign="center"
+								letterSpacing="-.02em"
+							>
+								{RichText.asText(data.headline2)}
+							</Heading>
+							<Button alignSelf="center" rightIcon={ArrowTopRight}>
+								{data.cta2}
+							</Button>
+						</Stack>
+					</GridItem>
+				</Grid>
+
+				<Grid {...gridProps} as="section" py={16}>
 					<GridItem gridColumn={{ base: "1/-1", md: "span 6" }}>
 						<Heading as="h2" size="lg" letterSpacing="-.02em" mb={4}>
 							{RichText.asText(data.headline3)}
 						</Heading>
-						<Text ml={{ lg: 16 }}>
+						<Box ml={{ lg: 16 }}>
 							<RichText render={data.content3} />
-						</Text>
+						</Box>
 					</GridItem>
 					<GridItem
 						gridColumn={{ base: "1/-1", sm: "5/-1", md: "7/-1", lg: "9/-1" }}
@@ -136,9 +125,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data }) => {
 					<Grid
 						gap={gridProps.gridGap}
 						templateColumns={{
-							base: "1fr",
-							sm: "1fr 1fr",
-							lg: "1fr 1fr 1fr",
+							base: "1fr 1fr",
+							sm: "1fr 1fr 1fr",
+							lg: "1fr 1fr 1fr 1fr",
 						}}
 					>
 						{data.team.map(

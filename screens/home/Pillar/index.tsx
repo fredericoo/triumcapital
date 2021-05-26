@@ -1,5 +1,5 @@
 import { RichTextBlock, RichText } from "prismic-reactjs";
-import { Stack, Heading, Text } from "@chakra-ui/react";
+import { Stack, Heading } from "@chakra-ui/react";
 import Picture from "app/components/Picture";
 
 const Pillar = ({
@@ -16,9 +16,8 @@ const Pillar = ({
 		<Heading as="h3" size="md" fontFamily="body" fontWeight="normal">
 			{RichText.asText(heading)}
 		</Heading>
-		<Text>
-			<RichText render={text} />
-		</Text>
+
+		<RichText render={text} />
 	</Stack>
 );
 

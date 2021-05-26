@@ -2,8 +2,8 @@ import moment from "moment";
 import { NextApiRequest, NextApiResponse } from "next";
 
 interface TimeSlot {
-	open: string;
-	close: string;
+	open: number;
+	close: number;
 }
 
 type TradingHours = { [key: string]: TimeSlot };
@@ -16,19 +16,48 @@ export type Index = {
 	open: number;
 	previousClose: number;
 	timestamp: number;
-	tradingHours?: TimeSlot;
+	tradingHours: TimeSlot;
 };
 
 async function market(req: NextApiRequest, res: NextApiResponse) {
 	const apiKey = process.env.FMP_KEY;
 	const timestamp = moment().format();
 
-	const symbols = ["^FTSE", "^BVSP", "^STOXX50E"];
+	const symbols = ["^BVSP", "^GSPC", "^IXIC", "^FTSE"];
 
 	const tradingHours: TradingHours = {
-		"^FTSE": { open: "06:00:00", close: "14:55:00" },
-		"^BVSP": { open: "10:00:00", close: "17:55:00" },
-		"^STOXX50E": { open: "06:00:00", close: "17:55:00" },
+		"^BVSP": {
+			open: moment()
+				.set({ hour: 14, minute: 0, second: 0, millisecond: 0 })
+				.unix(),
+			close: moment()
+				.set({ hour: 22, minute: 0, second: 0, millisecond: 0 })
+				.unix(),
+		},
+		"^GSPC": {
+			open: moment()
+				.set({ hour: 14, minute: 30, second: 0, millisecond: 0 })
+				.unix(),
+			close: moment()
+				.set({ hour: 21, minute: 30, second: 0, millisecond: 0 })
+				.unix(),
+		},
+		"^IXIC": {
+			open: moment()
+				.set({ hour: 14, minute: 30, second: 0, millisecond: 0 })
+				.unix(),
+			close: moment()
+				.set({ hour: 21, minute: 30, second: 0, millisecond: 0 })
+				.unix(),
+		},
+		"^FTSE": {
+			open: moment()
+				.set({ hour: 8, minute: 0, second: 0, millisecond: 0 })
+				.unix(),
+			close: moment()
+				.set({ hour: 16, minute: 30, second: 0, millisecond: 0 })
+				.unix(),
+		},
 	};
 
 	await fetch(

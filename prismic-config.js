@@ -1,5 +1,4 @@
 export const apiEndpoint = "https://trium.cdn.prismic.io/api/v2";
-export const accessToken = "";
 
 export const hrefResolver = (doc) => {
 	if (doc.link_type == "Web") return doc.url;
@@ -8,6 +7,8 @@ export const hrefResolver = (doc) => {
 			return `/`;
 		case "membro":
 			return `/equipe/${doc.uid}`;
+		case "post":
+			return `/posts/${doc.uid}`;
 		default:
 			return `/${doc.uid}`;
 	}

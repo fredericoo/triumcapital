@@ -1,4 +1,11 @@
-import { Flex, Square, Box, Heading, Text } from "@chakra-ui/react";
+import {
+	Flex,
+	Square,
+	Box,
+	Heading,
+	Text,
+	styled as chakraStyled,
+} from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import moment, { Moment } from "moment";
 import { Index } from "app/pages/api/market";
@@ -18,16 +25,14 @@ const Line = styled(Flex)`
 	}
 `;
 
-const BottomCaption: React.FC = ({ children }) => (
-	<Box
-		position="absolute"
-		fontSize="xs"
-		whiteSpace="nowrap"
-		transform="translateX(-50%)"
-	>
-		{children}
-	</Box>
-);
+const BottomCaption = chakraStyled(Box, {
+	baseStyle: {
+		position: "absolute",
+		fontSize: "xs",
+		whiteSpace: "nowrap",
+		transform: "translateX(-50%)",
+	},
+});
 
 type CaptionProps = {
 	direction: "left" | "right";
@@ -50,18 +55,10 @@ const TopCaption: React.FC<CaptionProps> = ({ children, direction }) => {
 
 const Current = ({ index }: { index: Index }) => {
 	const timeFormat = "HH:mm";
-	const hoursOpen = index.tradingHours?.open
-		.split(":")
-		.map((i) => +i)
-		.reduce((acc, cur) => +acc + cur / 60);
-	const hoursClose = index.tradingHours?.close
-		.split(":")
-		.map((i) => +i)
-		.reduce((acc, cur) => +acc + cur / 60);
 
 	const tradingHours = {
-		open: moment().startOf("day").add(hoursOpen, "hours"),
-		close: moment().startOf("day").add(hoursClose, "hours"),
+		open: moment.unix(index.tradingHours.open),
+		close: moment.unix(index.tradingHours.close),
 	};
 	const indexTime: Moment = moment.min([
 		moment.unix(index.timestamp),
@@ -71,6 +68,13 @@ const Current = ({ index }: { index: Index }) => {
 	const percentageOfDay = (time: Moment) =>
 		(moment.duration(time.diff(moment().startOf("day"))).asMinutes() * 100) /
 		(24 * 60);
+
+	const currentColor =
+		percentageOfDay(indexTime) > percentageOfDay(tradingHours.open)
+			? index.change > 0
+				? "positive"
+				: "negative"
+			: "gray.600";
 
 	return (
 		<>
@@ -111,9 +115,14 @@ const Current = ({ index }: { index: Index }) => {
 					position="absolute"
 					left={`${Math.ceil(percentageOfDay(tradingHours.close))}%`}
 					transform="translateX(-50%)"
+					transition=".6s ease-out"
 				>
 					<Square size={2} bg="gray.300" transform="translateY(-50%)" />
-					<BottomCaption>{tradingHours.close.format(timeFormat)}</BottomCaption>
+					<BottomCaption>
+						<Text color="gray.400">
+							{tradingHours.close.format(timeFormat)}
+						</Text>
+					</BottomCaption>
 				</Box>
 
 				<Box
@@ -122,25 +131,35 @@ const Current = ({ index }: { index: Index }) => {
 					transform="translateX(-50%)"
 				>
 					<TopCaption
-						direction={percentageOfDay(indexTime) > 50 ? "right" : "left"}
+						direction={
+							percentageOfDay(indexTime) >
+							percentageOfDay(tradingHours.open) +
+								(percentageOfDay(tradingHours.close) -
+									percentageOfDay(tradingHours.open)) /
+									2
+								? "right"
+								: "left"
+						}
 					>
-						<Heading as="h3" lineHeight="1" color="gray.200">
+						<Heading as="h3" lineHeight="1" color="gray.100">
 							{index.symbol}
 						</Heading>
-						<Text
-							fontWeight="bold"
-							letterSpacing="0.03em"
-							color={index.change > 0 ? "positive" : "negative"}
-						>
-							{index.price} ({index.changesPercentage}%)
+						<Heading as="h4" size="sm" fontFamily="body">
+							{index.name}
+						</Heading>
+
+						<Text fontWeight="bold" letterSpacing="0.03em" color={currentColor}>
+							{percentageOfDay(indexTime) > percentageOfDay(tradingHours.open)
+								? `${index.price} (${index.changesPercentage}%)`
+								: `abre em ${Math.ceil(
+										moment.duration(tradingHours.open.diff(indexTime)).asHours()
+								  )}h`}
 						</Text>
 					</TopCaption>
-					<Square
-						size={2}
-						bg={index.change > 0 ? "positive" : "negative"}
-						transform="translateY(-50%)"
-					/>
-					<BottomCaption>{indexTime.format(timeFormat)}</BottomCaption>
+					<Square size={2} bg={currentColor} transform="translateY(-50%)" />
+					<BottomCaption bg="white">
+						{indexTime.format(timeFormat)}
+					</BottomCaption>
 				</Box>
 			</Box>
 		</>

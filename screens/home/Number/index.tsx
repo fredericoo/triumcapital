@@ -1,5 +1,5 @@
 import { RichTextBlock, RichText } from "prismic-reactjs";
-import { Grid, GridItem, Heading, Text } from "@chakra-ui/react";
+import { Grid, GridItem, Heading, Box } from "@chakra-ui/react";
 
 const Number = ({
 	heading,
@@ -15,9 +15,9 @@ const Number = ({
 			</Heading>
 		</GridItem>
 		<GridItem gridColumn="2/-1">
-			<Text color="gray.500">
+			<Box color="gray.500">
 				<RichText render={text} />
-			</Text>
+			</Box>
 		</GridItem>
 	</Grid>
 );

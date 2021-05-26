@@ -7,7 +7,7 @@ type DocLinkProps = {
 	href?: string | null;
 } & Omit<LinkProps, "href">;
 
-const DocLink: React.FC<DocLinkProps> = (doc, ...props) => (
+const DocLink: React.FC<DocLinkProps> = ({ doc, ...props }) => (
 	<NextLink href={hrefResolver(doc)} {...props} />
 );
 
