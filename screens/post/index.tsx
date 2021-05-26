@@ -21,7 +21,7 @@ const PostScreen: React.FC<PostProps> = ({ data }) => {
 				<Heading as="h1" size="2xl" letterSpacing="tight">
 					{RichText.asText(data.title)}
 				</Heading>
-				{data.author && (
+				{data.author?.data && (
 					<DocLink doc={data.author}>
 						<Link>{RichText.asText(data.author.data.title)}</Link>
 					</DocLink>
@@ -39,11 +39,13 @@ const PostScreen: React.FC<PostProps> = ({ data }) => {
 				</Container>
 			)}
 			{data.body && <Slices body={data.body} />}
-			<Box bg="gray.100" py={8}>
-				<Container maxW="container.md">
-					<Author member={data.author.data} />
-				</Container>
-			</Box>
+			{data.author.data && (
+				<Box bg="gray.100" py={8}>
+					<Container maxW="container.md">
+						<Author member={data.author.data} />
+					</Container>
+				</Box>
+			)}
 		</>
 	);
 };
