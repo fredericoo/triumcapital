@@ -16,9 +16,57 @@ import MemberCard from "./MemberCard";
 import Number from "./Number";
 import Stocks from "./Stocks";
 import Posts from "./Posts";
+// @ts-ignore doesnt have a d.ts file but I need it anyway
+import ParticleField from "react-particles-webgl";
 
 type HomeScreenProps = { data: Document["data"]; posts: Document[] };
 
+const config = {
+	showCube: false,
+	dimension: "2D",
+	velocity: 2,
+	boundaryType: "passthru",
+	antialias: false,
+	direction: {
+		xMin: -1,
+		xMax: 1,
+		yMin: -1,
+		yMax: 1,
+		zMin: -1,
+		zMax: 1,
+	},
+	lines: {
+		colorMode: "rainbow",
+		color: "#351CCB",
+		transparency: 0.9,
+		limitConnections: true,
+		maxConnections: 20,
+		minDistance: 300,
+		visible: true,
+	},
+	particles: {
+		colorMode: "solid",
+		color: "#c8dcf3",
+		transparency: 1,
+		shape: "square",
+		boundingBox: "canvas",
+		count: 25,
+		minSize: 10,
+		maxSize: 51,
+		visible: true,
+	},
+	cameraControls: {
+		enabled: false,
+		enableDamping: false,
+		dampingFactor: 0.2,
+		enableZoom: false,
+		autoRotate: false,
+		autoRotateSpeed: 3.6,
+		resetCameraFlag: false,
+	},
+	limitConnections: false,
+	maxConnections: 1,
+};
 const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 	return (
 		<>
@@ -27,7 +75,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 					<GridItem
 						as="header"
 						alignSelf="center"
-						gridColumn={{ base: "1 / -1", lg: "span 8" }}
+						gridColumn={{ base: "1 / -1", lg: "1/span 8" }}
+						gridRow="1"
 					>
 						<Stack spacing={8}>
 							<Heading as="h1" size="2xl" letterSpacing="-0.02em">
@@ -40,6 +89,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 								{data.cta}
 							</Button>
 						</Stack>
+					</GridItem>
+					<GridItem
+						gridColumn="1/-1"
+						gridRow="1"
+						overflow="hidden"
+						pointerEvents="none"
+					>
+						<ParticleField config={config} />
 					</GridItem>
 				</Grid>
 			</Container>
