@@ -36,8 +36,8 @@ const config = {
 		zMax: 1,
 	},
 	lines: {
-		colorMode: "rainbow",
-		color: "#351CCB",
+		colorMode: "solid",
+		color: "#749cd2",
 		transparency: 0.9,
 		limitConnections: true,
 		maxConnections: 20,
@@ -46,7 +46,7 @@ const config = {
 	},
 	particles: {
 		colorMode: "solid",
-		color: "#c8dcf3",
+		color: "#749cd2",
 		transparency: 1,
 		shape: "square",
 		boundingBox: "canvas",
@@ -77,6 +77,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 						alignSelf="center"
 						gridColumn={{ base: "1 / -1", lg: "1/span 8" }}
 						gridRow="1"
+						zIndex={2}
 					>
 						<Stack spacing={8}>
 							<Heading as="h1" size="2xl" letterSpacing="-0.02em">
@@ -95,6 +96,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 						gridRow="1"
 						overflow="hidden"
 						pointerEvents="none"
+						zIndex={1}
 					>
 						<ParticleField config={config} />
 					</GridItem>
