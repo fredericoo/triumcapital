@@ -1,6 +1,6 @@
 import { Document } from "@prismicio/client/types/documents";
-import { Container, Grid, Box } from "@chakra-ui/react";
-import Post from "./Post";
+import { Container, Grid, Box, GridItem } from "@chakra-ui/react";
+import PostThumb from "app/components/PostThumb";
 
 type PostsProps = { data: Document[] };
 
@@ -17,11 +17,18 @@ const Posts: React.FC<PostsProps> = ({ data }) => {
 				>
 					{!!data.length &&
 						data.map((post, index) => (
-							<Post
-								key={post.uid}
-								doc={post}
-								size={index === 0 ? "lg" : index === 1 ? "md" : "sm"}
-							/>
+							<GridItem
+								gridArea={
+									index === 0 ? "newest" : index === 1 ? "second" : "initial"
+								}
+								gridRow={{ md: index <= 1 ? "1 / 6" : "auto" }}
+							>
+								<PostThumb
+									key={post.uid}
+									doc={post}
+									size={index === 0 ? "lg" : index === 1 ? "md" : "sm"}
+								/>
+							</GridItem>
 						))}
 				</Grid>
 			</Container>

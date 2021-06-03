@@ -64,16 +64,13 @@ const NewestBox = styled(Box)`
 	}
 `;
 
-const Post: React.FC<PostProps> = ({ doc, size }) => {
+const PostThumb: React.FC<PostProps> = ({ doc, size }) => {
 	if (!doc.data) return null;
 	const image = size != "sm" ? doc.data.cover.Pequeno : null;
 	const PostBox = size === "lg" ? NewestBox : Box;
 	return (
-		<PostBox
-			gridArea={size === "lg" ? "newest" : size === "md" ? "second" : "initial"}
-			gridRow={{ md: size !== "sm" ? "1 / 6" : "auto" }}
-		>
-			{image && (
+		<PostBox>
+			{image?.url && (
 				<DocLink doc={doc}>
 					<a>
 						<Picture
@@ -95,4 +92,4 @@ const Post: React.FC<PostProps> = ({ doc, size }) => {
 	);
 };
 
-export default Post;
+export default PostThumb;
