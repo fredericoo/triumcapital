@@ -26,7 +26,9 @@ const Posts: React.FC<PostsProps> = ({ data }) => {
 								<PostThumb
 									key={post.uid}
 									doc={post}
-									size={index === 0 ? "lg" : index === 1 ? "md" : "sm"}
+									withExcerpt={index <= 1}
+									withThumb={index <= 1}
+									headingSize={index === 0 ? "lg" : "md"}
 								/>
 							</GridItem>
 						))}

@@ -13,6 +13,7 @@ import { useSWRInfinite } from "swr";
 import PostThumb from "app/components/PostThumb";
 import PostSkeleton from "./PostSkeleton";
 import { useMemo } from "react";
+import SEO from "app/components/SEO";
 
 type PostsProps = {
 	posts: Document[];
@@ -55,6 +56,7 @@ const PostsScreen: React.FC<PostsProps> = ({
 
 	return (
 		<Container maxW="container.lg" pt={8}>
+			<SEO title="Posts" />
 			<Grid
 				templateColumns={{
 					base: "1fr",
@@ -64,17 +66,21 @@ const PostsScreen: React.FC<PostsProps> = ({
 				gridGap={6}
 			>
 				{posts?.map((doc: Document, index) => (
-					<GridItem gridColumn={{ lg: index === 0 ? "span 2" : "initial" }}>
+					<GridItem
+						key={doc.uid}
+						gridColumn={{ lg: index === 0 ? "span 2" : "initial" }}
+					>
 						<PostThumb
-							key={doc.uid}
 							doc={doc}
-							size={index === 0 ? "lg" : "md"}
+							withThumb
+							withExcerpt
+							headingSize={index === 0 ? "lg" : "md"}
 						/>
 					</GridItem>
 				))}
 				{data?.map(({ results }: ApiSearchResponse) =>
 					results.map((doc: Document) => (
-						<PostThumb key={doc.uid} doc={doc} size="md" />
+						<PostThumb key={doc.uid} doc={doc} withThumb headingSize="md" />
 					))
 				)}
 				{skeletons.map((_, index) => (
@@ -89,10 +95,10 @@ const PostsScreen: React.FC<PostsProps> = ({
 					letterSpacing="wider"
 					color="gray.700"
 				>
-					Mostrando {postCount} de {totalCount} posts
+					Mostrando {showingCount} de {totalCount} posts
 				</Text>
 				<Progress
-					value={postCount}
+					value={showingCount}
 					max={totalCount}
 					size="md"
 					width={36}
