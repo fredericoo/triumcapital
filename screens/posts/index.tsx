@@ -13,6 +13,7 @@ import PostThumb from "app/components/PostThumb";
 import { useMemo, useState, useEffect } from "react";
 import SEO from "app/components/SEO";
 import { FetchedPosts } from "app/pages/posts";
+import ApiSearchResponse from "@prismicio/client/types/ApiSearchResponse";
 
 type PostsProps = {
 	initialData: Document[][];
@@ -39,7 +40,10 @@ const PostsScreen: React.FC<PostsProps> = ({
 	);
 	const [isLoading, setIsLoading] = useState(false);
 	useEffect(() => setIsLoading(false), [data]);
-	const posts = useMemo(() => data?.flat(), [data, size]);
+	const posts = useMemo<Document[] | undefined>(() => data?.flat(), [
+		data,
+		size,
+	]);
 	const postCount = posts?.length ? Math.min(posts?.length, totalCount) : 0;
 
 	return (
