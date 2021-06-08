@@ -28,6 +28,11 @@ const TextContainer = styled(Container)`
 				}) => theme.colors.brand["200"]};
 			}
 		}
+		.glossario {
+			color: ${({ theme }: { theme: WithCSSVar<Record<string, any>> }) =>
+				theme.colors.brand["900"]};
+			border-top: 2px dotted;
+		}
 	}
 	li {
 		margin-bottom: 0.618em;
