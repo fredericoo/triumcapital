@@ -10,7 +10,6 @@ import {
 } from "@chakra-ui/react";
 import { useSWRInfinite } from "swr";
 import PostThumb from "app/components/PostThumb";
-import PostSkeleton from "./PostSkeleton";
 import { useMemo, useState, useEffect } from "react";
 import SEO from "app/components/SEO";
 import { FetchedPosts } from "app/pages/posts";
