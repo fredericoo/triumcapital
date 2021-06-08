@@ -2,6 +2,7 @@ import { RichTextBlock, RichText } from "prismic-reactjs";
 import { Container, Heading, Box } from "@chakra-ui/react";
 import Picture from "app/components/Picture";
 import Caption from "app/components/Caption";
+import styled from "@emotion/styled";
 
 export type CaptionProps = {
 	content: {
@@ -14,6 +15,25 @@ export type CaptionProps = {
 		text: RichTextBlock[];
 	};
 };
+
+const BodyText = styled(Box)`
+	h3,
+	h4,
+	h5,
+	h6 {
+		margin-bottom: 1rem;
+	}
+	h3 {
+		font-weight: bold;
+	}
+	.block-img {
+		max-width: 200px;
+	}
+	p:not(:last-child) {
+		margin-bottom: 1rem;
+	}
+`;
+
 const CaptionSlice: React.FC<CaptionProps> = ({ content }) => (
 	<Container maxW="container.sm" as="section" fontSize="sm">
 		<Box py={2} borderBlockStart="4px solid" borderBlockStartColor="brand.900">
@@ -34,7 +54,7 @@ const CaptionSlice: React.FC<CaptionProps> = ({ content }) => (
 					{content.caption}
 				</Heading>
 			)}
-			{content.text && <RichText render={content.text} />}
+			<BodyText>{content.text && <RichText render={content.text} />}</BodyText>
 		</Box>
 	</Container>
 );
