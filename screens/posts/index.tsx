@@ -8,51 +8,40 @@ import {
 	GridItem,
 	Container,
 } from "@chakra-ui/react";
-import ApiSearchResponse from "@prismicio/client/types/ApiSearchResponse";
 import { useSWRInfinite } from "swr";
 import PostThumb from "app/components/PostThumb";
 import PostSkeleton from "./PostSkeleton";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import SEO from "app/components/SEO";
+import { FetchedPosts } from "app/pages/posts";
 
 type PostsProps = {
-	posts: Document[];
+	initialData: Document[][];
 	totalCount: number;
-	perPage: number;
-	fetchMore: (after: string) => Promise<ApiSearchResponse>;
+	fetchMore: (after: string) => Promise<FetchedPosts>;
+};
+
+const getKey = (_pageIndex: number, previousPageData: FetchedPosts | null) => {
+	if (!Array.isArray(previousPageData)) return "beginning";
+	return previousPageData[previousPageData.length - 1].id;
 };
 
 const PostsScreen: React.FC<PostsProps> = ({
+	initialData,
 	fetchMore,
-	perPage,
-	posts,
-	totalCount,
+	totalCount = 999,
 }) => {
-	const getKey = (
-		_pageIndex: number,
-		previousPageData: ApiSearchResponse | null
-	) => {
-		if (previousPageData && !previousPageData.results.length) return null;
-		const lastId = previousPageData?.results
-			? [...previousPageData?.results].pop()?.id
-			: [...posts].pop()?.id;
-		return lastId || "beginning";
-	};
-	const { data, size, setSize } = useSWRInfinite(getKey, fetchMore, {
-		initialSize: 0,
-	});
-	const postCount = Math.min(posts.length + size * perPage, totalCount);
-	const showingCount = useMemo(() => {
-		const dataLength = Array.isArray(data)
-			? data.reduce(
-					(a: number, b: ApiSearchResponse) => a + b.results.length,
-					0
-			  )
-			: 0;
-		return posts.length + dataLength;
-	}, [data, posts]);
-
-	const skeletons = new Array(postCount - showingCount).fill(0);
+	const { data, size, setSize } = useSWRInfinite<FetchedPosts>(
+		getKey,
+		fetchMore,
+		{
+			initialData,
+		}
+	);
+	const [isLoading, setIsLoading] = useState(false);
+	useEffect(() => setIsLoading(false), [data]);
+	const posts = useMemo(() => data?.flat(), [data, size]);
+	const postCount = posts?.length ? Math.min(posts?.length, totalCount) : 0;
 
 	return (
 		<Container maxW="container.lg" pt={8}>
@@ -61,30 +50,26 @@ const PostsScreen: React.FC<PostsProps> = ({
 				templateColumns={{
 					base: "1fr",
 					md: "1fr 1fr",
-					lg: "1fr 1fr 1fr 1fr",
+					lg: "1fr 1fr 1fr",
 				}}
-				gridGap={6}
+				columnGap={6}
+				rowGap={12}
 			>
-				{posts?.map((doc: Document, index) => (
+				{posts?.map((doc: Document, index: number) => (
 					<GridItem
 						key={doc.uid}
-						gridColumn={{ lg: index === 0 ? "span 2" : "initial" }}
+						gridColumn={{
+							lg: index === 0 ? "span 3" : index === 1 ? "span 2" : "initial",
+						}}
 					>
 						<PostThumb
 							doc={doc}
 							withThumb
-							withExcerpt
+							thumbFormat={index < 2 ? "rectangle" : "square"}
+							withExcerpt={index <= 1}
 							headingSize={index === 0 ? "lg" : "md"}
 						/>
 					</GridItem>
-				))}
-				{data?.map(({ results }: ApiSearchResponse) =>
-					results.map((doc: Document) => (
-						<PostThumb key={doc.uid} doc={doc} withThumb headingSize="md" />
-					))
-				)}
-				{skeletons.map((_, index) => (
-					<PostSkeleton key={index} />
 				))}
 			</Grid>
 
@@ -95,10 +80,10 @@ const PostsScreen: React.FC<PostsProps> = ({
 					letterSpacing="wider"
 					color="gray.700"
 				>
-					Mostrando {showingCount} de {totalCount} posts
+					Mostrando {postCount} de {totalCount} posts
 				</Text>
 				<Progress
-					value={showingCount}
+					value={postCount}
 					max={totalCount}
 					size="md"
 					width={36}
@@ -106,11 +91,12 @@ const PostsScreen: React.FC<PostsProps> = ({
 				/>
 				{postCount < totalCount && (
 					<Button
-						onClick={() => setSize(size + 1)}
+						onClick={() => (setIsLoading(true), setSize(size + 1))}
 						size="sm"
 						px={6}
 						py={4}
 						variant="outline"
+						isLoading={isLoading}
 					>
 						Carregar mais
 					</Button>

@@ -1,3 +1,4 @@
+import type { Document } from "prismic-javascript/types/documents";
 import { GetStaticProps } from "next";
 import { client } from "app/utils/prismic";
 import useCookieToast from "app/utils/hooks/useCookieToast";
@@ -6,10 +7,14 @@ import ApiSearchResponse from "@prismicio/client/types/ApiSearchResponse";
 
 type PostsProps = { data: ApiSearchResponse };
 
-const postsPerPage = 8;
+const postsPerPage = 6;
 
-const fetchPosts = async (after: string, perPage: number = 8) =>
-	await client.query('[at(document.type,"post")]', {
+export type FetchedPosts = Document[] | ApiSearchResponse;
+const fetchPosts = async (
+	after: string,
+	fullQuery = false
+): Promise<FetchedPosts> => {
+	const query = await client.query('[at(document.type,"post")]', {
 		fetch: [
 			"post.title",
 			"post.excerpt",
@@ -21,24 +26,26 @@ const fetchPosts = async (after: string, perPage: number = 8) =>
 		fetchLinks: ["membro.title"],
 		orderings: "[my.post.published desc]",
 		after,
-		pageSize: perPage,
+		pageSize: postsPerPage,
 	});
+	if (fullQuery) return query;
+	return query.results;
+};
 
 const Posts: React.FC<PostsProps> = ({ data }) => {
 	useCookieToast();
 	if (!data) return null;
 	return (
 		<PostsScreen
-			perPage={postsPerPage}
-			posts={data.results}
+			initialData={[data.results]}
 			fetchMore={fetchPosts}
 			totalCount={data.total_results_size}
 		/>
 	);
 };
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-	const posts = await fetchPosts("", 7);
+export const getStaticProps: GetStaticProps = async () => {
+	const posts = await fetchPosts("", true);
 
 	return {
 		props: {

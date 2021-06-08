@@ -10,6 +10,7 @@ type PostProps = {
 	doc: Document;
 	headingSize: "sm" | "md" | "lg";
 	withThumb?: boolean;
+	thumbFormat?: "rectangle" | "square";
 	withExcerpt?: boolean;
 };
 
@@ -17,10 +18,14 @@ const PostThumb: React.FC<PostProps> = ({
 	doc,
 	withExcerpt,
 	withThumb,
+	thumbFormat = "square",
 	headingSize,
 }) => {
 	if (!doc.data) return null;
-	const thumbnailUrl = doc.data.cover.Pequeno.url || "/img/icone-positivo.svg";
+	const thumbnailUrl =
+		thumbFormat === "rectangle"
+			? doc.data.cover.url
+			: doc.data.cover.Pequeno.url || "/img/icone-positivo.svg";
 	return (
 		<Box>
 			{withThumb && (
@@ -28,7 +33,7 @@ const PostThumb: React.FC<PostProps> = ({
 					<a>
 						<Picture
 							src={thumbnailUrl}
-							width={800}
+							width={thumbFormat === "rectangle" ? 1600 : 800}
 							height={800}
 							objectFit="cover"
 						/>

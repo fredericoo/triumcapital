@@ -14,10 +14,18 @@ export type ImageProps = {
 };
 
 const SmallWrapper = styled(Container, {
-	baseStyle: { maxW: "container.sm", gridColumn: "main-start / main-end" },
+	baseStyle: {
+		maxW: "container.sm",
+		margin: "auto",
+		gridColumn: "main-start / main-end",
+	},
 });
 const LargeWrapper = styled(Container, {
-	baseStyle: { maxW: "container.md", gridColumn: "main-start / main-end" },
+	baseStyle: {
+		maxW: "container.md",
+		margin: "auto",
+		gridColumn: "main-start / main-end",
+	},
 });
 const FullScreenWrapper = styled(Box, {
 	baseStyle: { gridColumn: "screen-start / screen-end" },
