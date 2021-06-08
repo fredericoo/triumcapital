@@ -6,12 +6,22 @@ import DocLink from "app/components/DocLink";
 import Picture from "app/components/Picture";
 import Slices from "./slices";
 import Author from "./Author";
+import SEO from "app/components/SEO";
 
 type PostProps = { data: Document["data"] };
 
 const PostScreen: React.FC<PostProps> = ({ data }) => {
 	return (
 		<>
+			<SEO
+				title={RichText.asText(data.title)}
+				description={RichText.asText(data.excerpt)}
+				pageType="article"
+				image={
+					data.cover.url &&
+					data.cover.url.replace(/w=\d+&h=\d+/, "w=1200&h=627")
+				}
+			/>
 			<Container as="header" maxW="container.sm" py={8}>
 				{data.published && (
 					<Text textTransform="uppercase" fontSize="xs" letterSpacing="wider">
