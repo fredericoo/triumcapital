@@ -2,7 +2,7 @@ import useSWR from "swr";
 import { Spinner, Flex, useToast } from "@chakra-ui/react";
 import { DailyIndicator } from "app/pages/api/candlestick";
 import { useEffect, useMemo } from "react";
-import Candlestick from "app/components/CandlestickChart/CandleStick";
+import Candlestick from "./Candlestick";
 import { motion } from "framer-motion";
 
 const fetcher = async (endpoint: string) =>
