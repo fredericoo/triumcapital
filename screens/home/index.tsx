@@ -50,8 +50,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 				</Grid>
 			</Container>
 
-			<Stocks />
 			<Posts data={posts} />
+			<Stocks />
 
 			<Container maxW="container.lg">
 				<Grid
@@ -136,12 +136,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 							lg: "1fr 1fr 1fr 1fr",
 						}}
 					>
-						{data.team.map(
-							({ member }: { member?: any }) =>
-								member.data && (
-									<MemberCard key={member.uid} member={member.data} />
-								)
-						)}
+						{data.team
+							.slice(0, 4)
+							.map(
+								({ member }: { member?: any }) =>
+									member.data && (
+										<MemberCard key={member.uid} member={member.data} />
+									)
+							)}
 					</Grid>
 				</Stack>
 			</Container>
