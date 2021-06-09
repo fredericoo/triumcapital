@@ -30,16 +30,18 @@ const CandlestickChart: React.FC = () => {
 		data,
 	]);
 
-	const max = indicators.reduce(
-		(acc, value) =>
-			Math.max(acc, value.high, value.low, value.open, value.close),
-		0
-	);
-	const min = indicators.reduce(
-		(acc, value) =>
-			Math.min(acc, value.high, value.low, value.open, value.close),
-		99999
-	);
+	const max =
+		indicators.reduce(
+			(acc, value) =>
+				Math.max(acc, value.high, value.low, value.open, value.close),
+			0
+		) * 1.01;
+	const min =
+		indicators.reduce(
+			(acc, value) =>
+				Math.min(acc, value.high, value.low, value.open, value.close),
+			99999
+		) * 0.99;
 
 	useEffect(() => {
 		if (error)
