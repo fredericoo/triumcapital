@@ -16,57 +16,10 @@ import MemberCard from "./MemberCard";
 import Number from "./Number";
 import Stocks from "./Stocks";
 import Posts from "./Posts";
-// @ts-ignore doesnt have a d.ts file but I need it anyway
-import ParticleField from "react-particles-webgl";
+import CandlestickChart from "app/components/CandlestickChart";
 
 type HomeScreenProps = { data: Document["data"]; posts: Document[] };
 
-const config = {
-	showCube: false,
-	dimension: "2D",
-	velocity: 2,
-	boundaryType: "passthru",
-	antialias: false,
-	direction: {
-		xMin: -1,
-		xMax: 1,
-		yMin: -1,
-		yMax: 1,
-		zMin: -1,
-		zMax: 1,
-	},
-	lines: {
-		colorMode: "solid",
-		color: "#749cd2",
-		transparency: 0.9,
-		limitConnections: true,
-		maxConnections: 20,
-		minDistance: 300,
-		visible: true,
-	},
-	particles: {
-		colorMode: "solid",
-		color: "#749cd2",
-		transparency: 1,
-		shape: "square",
-		boundingBox: "canvas",
-		count: 25,
-		minSize: 10,
-		maxSize: 51,
-		visible: true,
-	},
-	cameraControls: {
-		enabled: false,
-		enableDamping: false,
-		dampingFactor: 0.2,
-		enableZoom: false,
-		autoRotate: false,
-		autoRotateSpeed: 3.6,
-		resetCameraFlag: false,
-	},
-	limitConnections: false,
-	maxConnections: 1,
-};
 const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 	return (
 		<>
@@ -91,14 +44,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 							</Button>
 						</Stack>
 					</GridItem>
-					<GridItem
-						gridColumn="1/-1"
-						gridRow="1"
-						overflow="hidden"
-						pointerEvents="none"
-						zIndex={1}
-					>
-						<ParticleField config={config} />
+					<GridItem gridColumn="1/-1" gridRow="1" zIndex={1}>
+						<CandlestickChart />
 					</GridItem>
 				</Grid>
 			</Container>

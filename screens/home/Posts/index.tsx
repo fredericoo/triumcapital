@@ -18,13 +18,13 @@ const Posts: React.FC<PostsProps> = ({ data }) => {
 					{!!data.length &&
 						data.map((post, index) => (
 							<GridItem
+								key={post.uid}
 								gridArea={
 									index === 0 ? "newest" : index === 1 ? "second" : "initial"
 								}
 								gridRow={{ md: index <= 1 ? "1 / 6" : "auto" }}
 							>
 								<PostThumb
-									key={post.uid}
 									doc={post}
 									withExcerpt={index <= 1}
 									withThumb={index <= 1}
