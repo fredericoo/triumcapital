@@ -9,11 +9,8 @@ type PostsProps = { data: ApiSearchResponse };
 
 const postsPerPage = 6;
 
-export type FetchedPosts = Document[] | ApiSearchResponse;
-const fetchPosts = async (
-	after: string,
-	fullQuery = false
-): Promise<FetchedPosts> => {
+export type FetchedPosts = ApiSearchResponse;
+const fetchPosts = async (after: string): Promise<FetchedPosts> => {
 	const query = await client.query('[at(document.type,"post")]', {
 		fetch: [
 			"post.title",
@@ -28,8 +25,7 @@ const fetchPosts = async (
 		after,
 		pageSize: postsPerPage,
 	});
-	if (fullQuery) return query;
-	return query.results;
+	return query;
 };
 
 const Posts: React.FC<PostsProps> = ({ data }) => {
@@ -37,7 +33,7 @@ const Posts: React.FC<PostsProps> = ({ data }) => {
 	if (!data) return null;
 	return (
 		<PostsScreen
-			initialData={[data.results]}
+			initialData={[data]}
 			fetchMore={fetchPosts}
 			totalCount={data.total_results_size}
 		/>
@@ -45,7 +41,7 @@ const Posts: React.FC<PostsProps> = ({ data }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-	const posts = await fetchPosts("", true);
+	const posts = await fetchPosts("");
 
 	return {
 		props: {

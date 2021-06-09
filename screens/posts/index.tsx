@@ -13,17 +13,16 @@ import PostThumb from "app/components/PostThumb";
 import { useMemo, useState, useEffect } from "react";
 import SEO from "app/components/SEO";
 import { FetchedPosts } from "app/pages/posts";
-import ApiSearchResponse from "@prismicio/client/types/ApiSearchResponse";
 
 type PostsProps = {
-	initialData: Document[][];
+	initialData: FetchedPosts[];
 	totalCount: number;
 	fetchMore: (after: string) => Promise<FetchedPosts>;
 };
 
 const getKey = (_pageIndex: number, previousPageData: FetchedPosts | null) => {
-	if (!Array.isArray(previousPageData)) return "beginning";
-	return previousPageData[previousPageData.length - 1].id;
+	if (!previousPageData?.results) return "beginning";
+	return previousPageData.results[previousPageData.results.length - 1].id;
 };
 
 const PostsScreen: React.FC<PostsProps> = ({
@@ -39,11 +38,15 @@ const PostsScreen: React.FC<PostsProps> = ({
 		}
 	);
 	const [isLoading, setIsLoading] = useState(false);
+
 	useEffect(() => setIsLoading(false), [data]);
-	const posts = useMemo<Document[] | undefined>(() => data?.flat(), [
-		data,
-		size,
-	]);
+
+	const posts = useMemo<Document[] | undefined>(() => {
+		const results = data?.map((response) => response.results);
+		if (!results) return [];
+		return results.flat();
+	}, [data, size]);
+
 	const postCount = posts?.length ? Math.min(posts?.length, totalCount) : 0;
 
 	return (
