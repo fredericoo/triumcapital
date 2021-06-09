@@ -23,32 +23,44 @@ type HomeScreenProps = { data: Document["data"]; posts: Document[] };
 const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 	return (
 		<>
-			<Container maxW="container.lg">
-				<Grid {...gridProps} minH="80vh" as="section">
-					<GridItem
-						as="header"
-						alignSelf="center"
-						gridColumn={{ base: "1 / -1", lg: "1/span 8" }}
-						gridRow="1"
-						zIndex={2}
-					>
-						<Stack spacing={8}>
-							<Heading as="h1" size="2xl" letterSpacing="-0.02em">
-								{RichText.asText(data.headline)}
-							</Heading>
+			<Grid minH="80vh" as="section">
+				<GridItem
+					as="header"
+					gridColumn="1"
+					gridRow="1"
+					zIndex={2}
+					pointerEvents="none"
+				>
+					<Container maxW="container.lg">
+						<Grid {...gridProps} minH="80vh" as="section">
+							<Stack
+								alignSelf="center"
+								gridColumn={{ base: "1 / -1", lg: "1/span 8" }}
+								gridRow="1"
+								zIndex={2}
+								spacing={8}
+							>
+								<Heading as="h1" size="2xl" letterSpacing="-0.02em">
+									{RichText.asText(data.headline)}
+								</Heading>
 
-							<RichText render={data.content} />
+								<RichText render={data.content} />
 
-							<Button alignSelf="flex-start" rightIcon={ArrowTopRight}>
-								{data.cta}
-							</Button>
-						</Stack>
-					</GridItem>
-					<GridItem gridColumn="1/-1" gridRow="1" zIndex={1}>
-						<CandlestickChart />
-					</GridItem>
-				</Grid>
-			</Container>
+								<Button
+									pointerEvents="all"
+									alignSelf="flex-start"
+									rightIcon={ArrowTopRight}
+								>
+									{data.cta}
+								</Button>
+							</Stack>
+						</Grid>
+					</Container>
+				</GridItem>
+				<GridItem gridColumn="1/-1" gridRow="1" zIndex={1}>
+					<CandlestickChart />
+				</GridItem>
+			</Grid>
 
 			<Posts data={posts} />
 			<Stocks />
