@@ -4,6 +4,7 @@ import CaptionSlice, { CaptionProps } from "./Caption";
 import QuoteSlice, { QuoteProps } from "./Quote";
 import ImageSlice, { ImageProps } from "./Image";
 import EmbedSlice, { EmbedProps } from "./Embed";
+import HtmlSlice, { HtmlSliceProps } from "./Html";
 
 type BaseSlice = { items: {}[]; primary: {}; slice_type: string };
 type TextSlice = BaseSlice & {
@@ -21,8 +22,16 @@ type ImageSlice = BaseSlice & {
 type EmbedSlice = BaseSlice & {
 	primary: { url: EmbedProps["content"] };
 };
+type HtmlSlice = BaseSlice & {
+	primary: HtmlSliceProps["content"];
+};
 
-type Slice = TextSlice & CaptionSlice & QuoteSlice & ImageSlice & EmbedSlice;
+type Slice = TextSlice &
+	CaptionSlice &
+	QuoteSlice &
+	ImageSlice &
+	EmbedSlice &
+	HtmlSlice;
 
 type SlicesProps = {
 	body: Slice[];
@@ -37,6 +46,7 @@ const Slices: React.FC<SlicesProps> = ({ body }) => {
 		embed_de_video: ({ primary }: EmbedSlice) => (
 			<EmbedSlice content={primary.url} />
 		),
+		html: ({ primary }: HtmlSlice) => <HtmlSlice content={primary} />,
 	};
 	return (
 		<Grid
