@@ -19,9 +19,10 @@ import Posts from "./Posts";
 import CandlestickChart from "app/components/CandlestickChart";
 import SEO from "app/components/SEO";
 
-type HomeScreenProps = { data: Document["data"]; posts: Document[] };
+type HomeScreenProps = { data?: Document["data"]; posts?: Document[] };
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
+	if (!data) return null;
 	return (
 		<>
 			<SEO description={RichText.asText(data.headline)} />
@@ -69,7 +70,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 				</GridItem>
 			</Grid>
 
-			<Posts data={posts} />
+			{posts && <Posts data={posts} />}
+
 			<Stocks />
 
 			<Container maxW="container.lg">

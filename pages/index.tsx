@@ -4,7 +4,7 @@ import HomeScreen from "app/screens/home";
 import useCookieToast from "app/utils/hooks/useCookieToast";
 import { Document } from "prismic-javascript/types/documents";
 
-type HomeProps = WithDoc & { posts: Document[] };
+type HomeProps = WithDoc & { posts?: Document[] };
 const Home: React.FC<HomeProps> = ({ doc, posts }) => {
 	useCookieToast();
 	if (!doc?.data) return null;
