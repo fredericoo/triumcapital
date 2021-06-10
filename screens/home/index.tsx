@@ -17,19 +17,21 @@ import Number from "./Number";
 import Stocks from "./Stocks";
 import Posts from "./Posts";
 import CandlestickChart from "app/components/CandlestickChart";
+import SEO from "app/components/SEO";
 
 type HomeScreenProps = { data: Document["data"]; posts: Document[] };
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 	return (
 		<>
+			<SEO description={RichText.asText(data.headline)} />
 			<Grid minH="80vh" as="section">
 				<GridItem
 					as="header"
 					gridColumn="1"
 					gridRow="1"
 					zIndex={2}
-					pointerEvents="none"
+					pointerEvents={{ base: "all", md: "none" }}
 				>
 					<Container maxW="container.lg">
 						<Grid {...gridProps} minH="80vh" as="section">
@@ -57,7 +59,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 						</Grid>
 					</Container>
 				</GridItem>
-				<GridItem gridColumn="1/-1" gridRow="1" zIndex={1}>
+				<GridItem
+					gridColumn="1/-1"
+					gridRow="1"
+					zIndex={1}
+					pointerEvents={{ base: "none", md: "all" }}
+				>
 					<CandlestickChart />
 				</GridItem>
 			</Grid>
