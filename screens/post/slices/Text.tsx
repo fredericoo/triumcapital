@@ -1,60 +1,49 @@
-import { RichTextBlock, RichText } from "prismic-reactjs";
-import { Container, useTheme, WithCSSVar } from "@chakra-ui/react";
-import styled from "@emotion/styled";
+import { RichTextBlock, RichText } from 'prismic-reactjs';
+import { Container } from '@chakra-ui/react';
 
 export type TextProps = {
-	content: RichTextBlock[];
+  content: RichTextBlock[];
 };
 
-const TextContainer = styled(Container)`
-	p {
-		font-size: 1em;
-		line-height: 1.618em;
-		margin-bottom: 1.618em;
-		a {
-			background-color: ${({
-				theme,
-			}: {
-				theme: WithCSSVar<Record<string, any>>;
-			}) => theme.colors.gray["100"]};
-			padding: 0.2em 0.3em;
-			border-radius: 2px;
-			transition: 0.15s ease-out;
-			&:hover {
-				background-color: ${({
-					theme,
-				}: {
-					theme: WithCSSVar<Record<string, any>>;
-				}) => theme.colors.brand["200"]};
-			}
-		}
-		.glossario {
-			color: ${({ theme }: { theme: WithCSSVar<Record<string, any>> }) =>
-				theme.colors.brand["900"]};
-			border-top: 2px dotted;
-		}
-	}
-	li {
-		margin-bottom: 0.618em;
-		&:last-of-type {
-			margin-bottom: 1.618em;
-		}
-	}
-`;
+const containerChildrenStyles = {
+  p: {
+    fontSize: '1em',
+    lineHeight: '1.618em',
+    marginBottom: '1.618em',
+    a: {
+      backgroundColor: 'var(--trium-colors-gray-100)',
+      padding: '.2em .3em',
+      borderRadius: '2px',
+      transition: '.15s ease-out',
+      '&:hover': {
+        backgroundColor: 'var(--trium-colors-brand-200)',
+      },
+    },
+    '.glossario': {
+      color: 'var(--trium-colors-brand-900)',
+      borderTop: '2px dotted',
+    },
+  },
+  li: {
+    marginBottom: '0.618em',
+    '&:last-of-type': {
+      marginBottom: '1.618em',
+    },
+  },
+};
 
 const TextSlice: React.FC<TextProps> = ({ content }) => {
-	const theme = useTheme();
-	return (
-		<TextContainer
-			theme={theme}
-			maxW="container.md"
-			as="section"
-			gridColumn="main-start / main-end"
-			fontSize={{ base: "md", md: "lg" }}
-		>
-			<RichText render={content} />
-		</TextContainer>
-	);
+  return (
+    <Container
+      css={containerChildrenStyles}
+      maxW="container.md"
+      as="section"
+      gridColumn="main-start / main-end"
+      fontSize={{ base: 'md', md: 'lg' }}
+    >
+      <RichText render={content} />
+    </Container>
+  );
 };
 
 export default TextSlice;
