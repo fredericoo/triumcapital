@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { Spinner, Flex, useToast } from '@chakra-ui/react';
+import { Spinner, Flex, useToast, Text, Box } from '@chakra-ui/react';
 import { DailyIndicator } from 'app/pages/api/candlestick';
 import { useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
@@ -22,12 +22,13 @@ const Wrapper = motion(Flex);
 const CandlestickChart: React.FC = () => {
   const { data, error } = useSWR<DailyIndicator[], string>('/api/candlestick', fetcher);
   const toast = useToast();
-  const indicators = useMemo(() => (data ? data.slice(0, 60).reverse() : []), [data]);
+  const indicators = useMemo(() => (Array.isArray(data) ? data?.slice(0, 42).reverse() : []), [data]);
 
-  const max =
-    indicators.reduce((acc, value) => Math.max(acc, value.high, value.low, value.open, value.close), 0) * 1.01;
-  const min =
-    indicators.reduce((acc, value) => Math.min(acc, value.high, value.low, value.open, value.close), 99999) * 0.99;
+  const max = indicators.reduce((acc, value) => Math.max(acc, value.high, value.low, value.open, value.close), 0);
+  const min = indicators.reduce(
+    (acc, value) => Math.min(acc, value.high, value.low, value.open, value.close),
+    999999999
+  );
 
   useEffect(() => {
     if (error)
@@ -48,20 +49,33 @@ const CandlestickChart: React.FC = () => {
       </Flex>
     );
   return (
-    <Wrapper variants={variants} initial="hidden" animate="show" height="100%">
-      {indicators.map(indicator => (
-        <Candlestick
-          key={indicator.date}
-          high={indicator.high}
-          low={indicator.low}
-          open={indicator.open}
-          close={indicator.close}
-          max={max}
-          min={min}
-          label={indicator.date}
-        />
-      ))}
-    </Wrapper>
+    <Box position="relative" height="100%">
+      <Wrapper variants={variants} initial="hidden" animate="show" height="100%">
+        {indicators.map(indicator => (
+          <Candlestick
+            key={indicator.date}
+            high={indicator.high}
+            low={indicator.low}
+            open={indicator.open}
+            close={indicator.close}
+            max={max}
+            min={min}
+            label={indicator.date}
+          />
+        ))}
+      </Wrapper>
+      <Text
+        position="absolute"
+        bottom="0"
+        right="0"
+        fontSize="xs"
+        p={4}
+        letterSpacing="wide"
+        color={{ base: 'gray.300', md: 'gray.500' }}
+      >
+        IBOVESPA nas últimas 42h
+      </Text>
+    </Box>
   );
 };
 

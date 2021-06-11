@@ -20,8 +20,8 @@ const Stick = styled(Box, {
 });
 
 const variants = {
-  hidden: { scale: 0 },
-  show: { scale: 1 },
+  hidden: { scaleY: 0 },
+  show: { scaleY: 1 },
 };
 const Line = motion(Box);
 

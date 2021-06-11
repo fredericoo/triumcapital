@@ -14,8 +14,8 @@ async function market(req: NextApiRequest, res: NextApiResponse): Promise<void> 
   const apiKey = process.env.FMP_KEY;
 
   await fetch(
-    `https://financialmodelingprep.com/api/v3/technical_indicator/daily/${
-      req.body.symbol || 'AAPL'
+    `https://financialmodelingprep.com/api/v3/historical-chart/1hour/${
+      req.body.symbol || '^BVSP'
     }?period=1&type=ema&apikey=${apiKey}`
   )
     .then(res => res.json())
