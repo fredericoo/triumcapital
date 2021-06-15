@@ -1,5 +1,6 @@
-import { Box, styled, Tooltip } from '@chakra-ui/react';
+import { Box, styled, Tooltip, useTheme } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import { ReactNode } from 'react';
 
 type CandlestickProps = {
   open: number;
@@ -8,7 +9,7 @@ type CandlestickProps = {
   low: number;
   max: number;
   min: number;
-  label: string;
+  label: ReactNode;
 };
 
 const Candle = styled(Box, {
@@ -19,23 +20,28 @@ const Stick = styled(Box, {
   baseStyle: { position: 'absolute', width: '1px', left: 'calc(50% - .5px)' },
 });
 
-const variants = {
-  hidden: { scaleY: 0 },
-  show: { scaleY: 1 },
-};
 const Line = motion(Box);
 
 const Candlestick: React.FC<CandlestickProps> = ({ open, close, high, low, max, min, label }) => {
+  const theme = useTheme();
+
   const getPercent = (value: number): number => ((value - min) * 100) / (max - min);
   const fillColor = close < open ? 'positive' : 'negative';
+  const variants = {
+    hidden: {},
+    show: {
+      opacity: [0.25, 0.25, 0.25, 1],
+      color: [theme.colors.gray['100'], theme.colors[fillColor], theme.colors.gray['100'], theme.colors.gray['100']],
+    },
+  };
 
   return (
     <Line
+      sx={{ '--candlestick-color': 'red' }}
       height="100%"
       position="relative"
       flexGrow={1}
       color="gray.100"
-      _hover={{ color: fillColor }}
       variants={variants}
     >
       <Stick
@@ -46,6 +52,7 @@ const Candlestick: React.FC<CandlestickProps> = ({ open, close, high, low, max, 
       <Tooltip label={label}>
         <Candle
           bg="currentColor"
+          _hover={{ bg: fillColor }}
           bottom={`${getPercent(Math.min(open, close))}%`}
           height={`${getPercent(Math.abs(close - open) + min)}%`}
         />

@@ -4,13 +4,13 @@ import { DailyIndicator } from 'app/pages/api/candlestick';
 import { useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Candlestick from './Candlestick';
+import moment from 'moment';
 
 const fetcher = async (endpoint: string): Promise<DailyIndicator[]> => fetch(endpoint).then(res => res.json());
 
 const variants = {
-  hidden: { opacity: 0 },
+  hidden: {},
   show: {
-    opacity: 1,
     transition: {
       staggerChildren: 0.02,
     },
@@ -60,7 +60,12 @@ const CandlestickChart: React.FC = () => {
             close={indicator.close}
             max={max}
             min={min}
-            label={indicator.date}
+            label={
+              <>
+                <Text fontSize="xs">{moment(indicator.date, 'YYYY-MM-DD hh:mm:ss').format('DD MMM hh:mm')}</Text>
+                <Text>{new Intl.NumberFormat('pt-BR', { style: 'decimal' }).format(indicator.close)}</Text>
+              </>
+            }
           />
         ))}
       </Wrapper>
@@ -73,7 +78,7 @@ const CandlestickChart: React.FC = () => {
         letterSpacing="wide"
         color={{ base: 'gray.300', md: 'gray.500' }}
       >
-        IBOVESPA nas últimas 42h
+        IBOVESPA, por hora
       </Text>
     </Box>
   );
