@@ -27,6 +27,8 @@ const BottomCaption = chakraStyled(Box, {
   },
 });
 
+const formatDecimal = (number: number): string => new Intl.NumberFormat('pt-BR', { style: 'decimal' }).format(number);
+
 type CaptionProps = {
   direction: 'left' | 'right';
 };
@@ -81,7 +83,7 @@ const Content: React.FC<ContentProps> = ({ index }) => {
               <Heading as="h4" size="xs" color="gray.300" fontFamily="body">
                 Abertura
               </Heading>
-              <Text letterSpacing="0.03em">{index.open}</Text>
+              <Text letterSpacing="0.03em">{formatDecimal(index.open)}</Text>
             </TopCaption>
 
             <Square size={2} bg="gray.300" transform="translateY(-50%)" />
@@ -121,7 +123,7 @@ const Content: React.FC<ContentProps> = ({ index }) => {
 
             <Text fontWeight="bold" letterSpacing="0.03em" color={currentColor}>
               {getPercentage(indexTime) > getPercentage(tradingHours.open)
-                ? `${index.price} (${index.changesPercentage}%)`
+                ? `${formatDecimal(index.price)} (${index.changesPercentage}%)`
                 : `abre em ${Math.ceil(moment.duration(tradingHours.open.diff(indexTime)).asHours())}h`}
             </Text>
           </TopCaption>
