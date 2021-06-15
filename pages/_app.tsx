@@ -2,7 +2,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { AppComponent } from 'next/dist/next-server/lib/router/router';
 import theme from 'app/styles/theme';
 import Fonts from 'app/styles/fonts';
-import Navbar from 'app/components/Navbar';
+import Navbar from 'app/components/Navbar/Navbar';
 import moment from 'moment';
 
 const App: AppComponent = ({ Component, pageProps }) => {
