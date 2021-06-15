@@ -42,8 +42,8 @@ export type TriumTheme = Theme & {
 
 const theme = extendTheme({
   fonts: {
-    heading: 'reckless',
-    body: 'roobert',
+    heading: 'reckless, serif',
+    body: 'roobert, sans-serif',
   },
   colors: {
     brand: {
