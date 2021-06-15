@@ -58,6 +58,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
+      "yarn type-check",
       "yarn lint:fix"
     ],
     "*.{md,json}": [
