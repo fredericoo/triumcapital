@@ -17,6 +17,7 @@
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@prismicio/client": "^4.0.0",
+    "focus-visible": "^5.2.0",
     "framer-motion": "^4.1.17",
     "moment": "^2.29.1",
     "next": "10.2.0",
