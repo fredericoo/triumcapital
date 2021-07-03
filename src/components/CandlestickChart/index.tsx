@@ -1,7 +1,7 @@
 import useSWR from 'swr';
-import { Spinner, Flex, useToast, Text, Box } from '@chakra-ui/react';
+import { Flex, Text, Box } from '@chakra-ui/react';
 import { DailyIndicator } from '@/pages/api/candlestick';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Candlestick from './Candlestick';
 import moment from 'moment';
@@ -21,7 +21,6 @@ const Wrapper = motion(Flex);
 
 const CandlestickChart: React.FC = () => {
   const { data, error } = useSWR<DailyIndicator[], string>('/api/candlestick', fetcher);
-  const toast = useToast();
   const indicators = useMemo(() => (Array.isArray(data) ? data?.slice(0, 42).reverse() : []), [data]);
 
   const max = indicators.reduce((acc, value) => Math.max(acc, value.high, value.low, value.open, value.close), 0);
@@ -30,24 +29,8 @@ const CandlestickChart: React.FC = () => {
     999999999
   );
 
-  useEffect(() => {
-    if (error)
-      toast({
-        id: 'candlestick',
-        description: 'Não foi possível receber dados para montar o gráfico',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-  }, [error, toast]);
-
   if (error) return null;
-  if (!data)
-    return (
-      <Flex height="100%" alignItems="center" justifyContent="center">
-        <Spinner color="gray.200" />
-      </Flex>
-    );
+
   return (
     <Box position="relative" height="100%">
       <Wrapper variants={variants} initial="hidden" animate="show" height="100%">
