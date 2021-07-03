@@ -4,6 +4,7 @@ import theme from '@/styles/theme';
 import Fonts from '@/styles/fonts';
 import Navbar from '@/components/Navbar';
 import moment from 'moment';
+import 'focus-visible/dist/focus-visible';
 
 const App: AppComponent = ({ Component, pageProps }) => {
   moment.locale('pt-br');
