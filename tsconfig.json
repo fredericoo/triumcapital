@@ -4,7 +4,7 @@
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"baseUrl": ".",
 		"paths": {
-			"app/*": ["*"]
+			"@/*": ["src/*"]
 		},
 		"allowJs": true,
 		"skipLibCheck": true,
@@ -22,8 +22,6 @@
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
-		"next.config.js",
-		"prismic-config.js"
 	],
 	"exclude": ["node_modules"]
 }

@@ -6,6 +6,6 @@ module.exports = {
     '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest'
   },
   moduleNameMapper: {
-    'app/(.*)': '<rootDir>/$1'
+    'app/(.*)': '<rootDir>/src/$1'
   }
 };

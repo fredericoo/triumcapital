@@ -1,0 +1,54 @@
+import { Container, Heading, Text, Link, Box } from '@chakra-ui/react';
+import { RichText } from 'prismic-reactjs';
+import { Document } from 'prismic-javascript/types/documents';
+import moment from 'moment';
+import DocLink from '@/components/DocLink';
+import Picture from '@/components/Picture';
+import SEO from '@/components/SEO';
+import Slices from './slices';
+import Author from './Author';
+
+type PostProps = { data: Document['data'] };
+
+const PostScreen: React.FC<PostProps> = ({ data }) => {
+  return (
+    <>
+      <SEO
+        title={RichText.asText(data.title)}
+        description={RichText.asText(data.excerpt)}
+        pageType="article"
+        image={data.cover.url && data.cover.url.replace(/w=\d+&h=\d+/, 'w=1200&h=627')}
+      />
+      <Container as="header" maxW="container.sm" py={8}>
+        {data.published && (
+          <Text textTransform="uppercase" fontSize="xs" letterSpacing="wider">
+            {moment(data.published, 'YYYY-MM-DD').format('LL')}
+          </Text>
+        )}
+        <Heading as="h1" size="2xl" letterSpacing="tight">
+          {RichText.asText(data.title)}
+        </Heading>
+        {data.author?.data && (
+          <DocLink doc={data.author}>
+            <Link>{RichText.asText(data.author.data.title)}</Link>
+          </DocLink>
+        )}
+      </Container>
+      {data.cover.url && (
+        <Container maxW="container.lg">
+          <Picture src={data.cover.url} width={800} height={400} layout="responsive" objectFit="cover" />
+        </Container>
+      )}
+      {data.body && <Slices body={data.body} />}
+      {data.author.data && (
+        <Box bg="gray.100" py={8}>
+          <Container maxW="container.md">
+            <Author member={data.author.data} />
+          </Container>
+        </Box>
+      )}
+    </>
+  );
+};
+
+export default PostScreen;
