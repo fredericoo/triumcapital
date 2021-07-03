@@ -5,17 +5,23 @@ import { useMediaQuery } from '@chakra-ui/react';
 import NavbarLarge from './NavbarLarge';
 import NavbarSmall from './NavbarSmall';
 import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 
 const fetcher = async (): Promise<Document> => await client.getSingle('config', {});
 
 const Navbar: React.FC = () => {
-  const [isLarge] = useMediaQuery('(min-width: 768px)');
+  const [matchesMediaQuery] = useMediaQuery('(min-width: 768px)');
   const { data: config } = useSWR('config', fetcher);
   const { asPath } = useRouter();
 
-  const Component = isLarge ? NavbarLarge : NavbarSmall;
+  const [isLarge, setIsLarge] = useState<boolean | undefined>(undefined);
+  useEffect(() => {
+    setIsLarge(matchesMediaQuery);
+  }, [setIsLarge, matchesMediaQuery]);
 
-  return <Component menu={config?.data?.menu} currentPath={asPath} />;
+  const navbarProps = { menu: config?.data?.menu, currentPath: asPath };
+  if (typeof isLarge !== 'boolean') return null;
+  return isLarge ? <NavbarLarge {...navbarProps} /> : <NavbarSmall {...navbarProps} />;
 };
 
 export default Navbar;
