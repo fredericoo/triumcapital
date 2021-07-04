@@ -47,7 +47,7 @@ const Slices: React.FC<SlicesProps> = ({ body }) => {
         lg: '[screen-start] .5fr [main-start] minmax(33ch, 66ch) [main-end] 1fr [screen-end]',
         xl: '[screen-start] 1fr [main-start] minmax(33ch, 77ch) [main-end] 1fr [screen-end]',
       }}
-      rowGap={{ base: 8, md: 0 }}
+      rowGap="1.618em"
     >
       {body.map((slice, key) => (
         <Slice data={slice} key={key} />

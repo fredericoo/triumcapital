@@ -1,6 +1,6 @@
 import { extendTheme, Theme } from '@chakra-ui/react';
 
-const buttonProps = {
+const Button = {
   defaultProps: {
     variant: 'primary',
   },
@@ -29,6 +29,12 @@ const buttonProps = {
 const Heading = {
   baseStyle: {
     color: 'gray.900',
+  },
+};
+
+const Link = {
+  baseStyle: {
+    textUnderlineOffset: '.3em',
   },
 };
 
@@ -69,8 +75,9 @@ const theme = extendTheme({
     },
   },
   components: {
-    Button: buttonProps,
+    Button,
     Heading,
+    Link,
   },
   config: {
     cssVarPrefix: 'trium',

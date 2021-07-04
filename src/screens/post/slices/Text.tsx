@@ -9,24 +9,23 @@ const containerChildrenStyles = {
   p: {
     fontSize: '1em',
     lineHeight: '1.618em',
-    marginBottom: '1.618em',
+    '&:not(:last-child)': { marginBottom: '1.618em' },
     'b, strong': {
       color: 'black',
     },
     a: {
-      borderBottom: '8px solid',
-      borderBottomColor: 'var(--trium-colors-brand-100)',
-      transition: '.15s ease-out',
+      color: 'var(--trium-colors-brand-900)',
       '&:hover': {
-        borderBottomWidth: '0',
-        backgroundColor: 'var(--trium-colors-brand-100)',
+        backgroundColor: 'var(--trium-colors-gray-50)',
       },
     },
     '.glossario': {
-      borderBottom: '2px dotted',
+      borderBottom: '8px solid',
+      borderBottomColor: 'var(--trium-colors-brand-100)',
     },
   },
   li: {
+    marginLeft: '2rem',
     marginBottom: '0.618em',
     '&:last-of-type': {
       marginBottom: '1.618em',

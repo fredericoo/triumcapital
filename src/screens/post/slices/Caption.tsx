@@ -36,7 +36,7 @@ const BodyText = styled(Box)`
 
 const CaptionSlice: React.FC<CaptionProps> = ({ content }) => (
   <Container maxW="container.sm" as="section" fontSize="sm">
-    <Box py={2} px={{ xl: 6 }}>
+    <Box pl={{ base: 16, md: 0 }} px={{ xl: 6 }}>
       {content.imagem.url && (
         <Box mb={4} maxW="200px" as="figure">
           <Picture
