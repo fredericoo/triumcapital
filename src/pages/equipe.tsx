@@ -1,4 +1,4 @@
-import { GetStaticProps, GetStaticPaths } from 'next';
+import { GetStaticProps } from 'next';
 import { client } from '@/utils/prismic';
 import TeamScreen from '@/screens/team';
 import { PrismicDocument } from '@/utils/types';
@@ -15,13 +15,6 @@ export type TeamProps = { doc: PrismicDocument<TeamDocument> };
 const Team: React.FC<TeamProps> = ({ doc }) => {
   if (!doc?.data) return null;
   return <TeamScreen doc={doc} />;
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const doc = await client.getSingle('equipe', {
-    lang: '*',
-  });
-  return { paths: [{ params: { equipe: doc.uid } }], fallback: 'blocking' };
 };
 
 export const getStaticProps: GetStaticProps<TeamProps> = async ({ locale }) => {

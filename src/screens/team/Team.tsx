@@ -1,7 +1,7 @@
 import { Container, VisuallyHidden, SimpleGrid, Heading, Grid } from '@chakra-ui/react';
 import { RichText } from 'prismic-reactjs';
 import SEO from '@/components/SEO';
-import { TeamProps } from '@/pages/[equipe]';
+import { TeamProps } from '@/pages/equipe';
 import MemberCard from '@/components/MemberCard';
 
 const TeamScreen: React.FC<TeamProps> = ({ doc }) => {
