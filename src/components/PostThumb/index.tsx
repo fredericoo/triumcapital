@@ -1,9 +1,9 @@
 import { Document } from '@prismicio/client/types/documents';
 import { Box, Heading, LinkBox, LinkOverlay } from '@chakra-ui/react';
-import DocLink from '@/components/DocLink';
 import { RichText } from 'prismic-reactjs';
+import DocLink from '@/components/DocLink';
 import Picture from '@/components/Picture';
-import Caption from '../Caption';
+import Caption from '@/components/Caption';
 
 type PostProps = {
   doc: Document;
