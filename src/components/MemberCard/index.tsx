@@ -1,14 +1,9 @@
 import { Stack, Text, Box, LinkBox, LinkOverlay } from '@chakra-ui/react';
 import Picture from '@/components/Picture';
-import { RichText, RichTextBlock } from 'prismic-reactjs';
-import { PrismicImage, PrismicDocument } from '@/utils/types';
+import { RichText } from 'prismic-reactjs';
+import { PrismicDocument } from '@/utils/types';
 import DocLink from '../DocLink';
-
-export interface MemberData {
-  image: PrismicImage;
-  title: RichTextBlock[];
-  content: RichTextBlock[];
-}
+import { MemberData } from '@/pages/equipe/[uid]';
 
 type MemberCardProps = { member: PrismicDocument<MemberData> };
 

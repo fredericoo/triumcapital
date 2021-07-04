@@ -3,7 +3,7 @@ import { client } from '@/utils/prismic';
 import TeamScreen from '@/screens/team';
 import { PrismicDocument } from '@/utils/types';
 import { RichTextBlock } from 'prismic-reactjs';
-import { MemberData } from '@/components/MemberCard';
+import { MemberData } from './equipe/[uid]';
 
 type TeamDocument = {
   title: RichTextBlock[];
