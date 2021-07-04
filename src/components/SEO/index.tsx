@@ -42,7 +42,7 @@ const SEO: React.FC<SEO> = props => {
 
       <meta property="og:type" content={props.pageType || 'website'} />
 
-      <meta property="og:image" content={props.image || '/favicon.png'} />
+      <meta property="og:image" content={props.image || '/img/fallback-seo.png'} />
 
       <link rel="icon" href="/img/favicon.svg" />
       <link rel="mask-icon" href="/img/favicon.svg" color="#000000" />
