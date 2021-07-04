@@ -3,13 +3,13 @@ import Picture from '@/components/Picture';
 import { RichText, RichTextBlock } from 'prismic-reactjs';
 import { PrismicImage } from '@/utils/types';
 
-interface Member {
+export interface MemberData {
   image: PrismicImage;
   title: RichTextBlock[];
   content: RichTextBlock[];
 }
 
-type MemberCardProps = { member: Member };
+type MemberCardProps = { member: MemberData };
 
 const MemberCard: React.FC<MemberCardProps> = ({ member }) => (
   <Stack spacing={2}>

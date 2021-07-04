@@ -11,7 +11,7 @@ const fetcher = async (): Promise<Document> => await client.getSingle('config', 
 
 const Navbar: React.FC = () => {
   const [matchesMediaQuery] = useMediaQuery('(min-width: 768px)');
-  const { data: config } = useSWR('config', fetcher);
+  const { data: config } = useSWR('config', fetcher, { revalidateOnFocus: false });
   const { asPath } = useRouter();
 
   const [isLarge, setIsLarge] = useState<boolean | undefined>(undefined);
