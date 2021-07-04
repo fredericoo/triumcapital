@@ -1,4 +1,4 @@
-import { Container, VisuallyHidden, SimpleGrid, Heading } from '@chakra-ui/react';
+import { Container, VisuallyHidden, SimpleGrid, Heading, Grid } from '@chakra-ui/react';
 import { RichText } from 'prismic-reactjs';
 import SEO from '@/components/SEO';
 import { TeamProps } from '@/pages/[equipe]';
@@ -16,14 +16,16 @@ const TeamScreen: React.FC<TeamProps> = ({ doc }) => {
       <VisuallyHidden>
         <h1>{RichText.asText(doc.data.title)}</h1>
       </VisuallyHidden>
-      <Heading as="h2" fontWeight="normal" py={32} letterSpacing="tight" maxW="33ch">
-        <RichText render={doc.data.quote} />
-      </Heading>
-      <SimpleGrid columns={{ base: 1, md: 3, lg: 4 }}>
-        {doc.data.members?.map(({ member }) => (
-          <MemberCard key={member.uid} member={member.data} />
-        ))}
-      </SimpleGrid>
+      <Grid templateColumns={{ base: '1fr', lg: '1fr 3fr' }} rowGap={16} gap={4} py={32}>
+        <Heading as="h2" size="md" fontWeight="normal" letterSpacing="tight" maxW="33ch">
+          <RichText render={doc.data.quote} />
+        </Heading>
+        <SimpleGrid columns={{ base: 2, md: 3 }} gap={4}>
+          {doc.data.members?.map(({ member }) => (
+            <MemberCard key={member.uid} member={member.data} />
+          ))}
+        </SimpleGrid>
+      </Grid>
     </Container>
   );
 };
