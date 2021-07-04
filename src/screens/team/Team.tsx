@@ -22,7 +22,7 @@ const TeamScreen: React.FC<TeamProps> = ({ doc }) => {
         </Heading>
         <SimpleGrid columns={{ base: 2, md: 3 }} gap={4}>
           {doc.data.members?.map(({ member }) => (
-            <MemberCard key={member.uid} member={member.data} />
+            <MemberCard key={member.uid} member={member} />
           ))}
         </SimpleGrid>
       </Grid>

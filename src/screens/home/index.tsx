@@ -115,7 +115,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
         </Grid>
 
         <Stack spacing={8} as="section">
-          <Heading as="h2" size="2xl" letterSpacing="-.02em">
+          <Heading as="h2" size="xl" letterSpacing="-.02em" fontWeight="normal">
             {RichText.asText(data.headline4)}
           </Heading>
           <Grid
@@ -129,8 +129,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
             {data.team
               .slice(0, 4)
               .map(
-                ({ member }: { member?: Document }) =>
-                  member?.data && <MemberCard key={member.uid} member={member.data} />
+                ({ member }: { member?: Document }) => member?.data && <MemberCard key={member.uid} member={member} />
               )}
           </Grid>
         </Stack>

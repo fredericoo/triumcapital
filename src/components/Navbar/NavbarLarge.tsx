@@ -9,7 +9,7 @@ import { hrefResolver } from '@/prismic-config';
 const NavbarLarge: React.FC<MenuProps> = ({ menu, currentPath }) => (
   <Box as="nav" data-testid="navbar-large" position="sticky" top={0} bg="white" zIndex="sticky" boxShadow="sm">
     <Container maxW="container.lg">
-      <HStack spacing={4}>
+      <HStack spacing={8}>
         <Box>
           <Logo />
         </Box>
