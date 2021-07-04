@@ -4,22 +4,32 @@ import DocLink from '@/components/DocLink';
 import { ArrowTopRight } from '@/components/Icon';
 import Logo from './Logo';
 import { MenuProps } from './types';
+import { hrefResolver } from '@/prismic-config';
 
-const NavbarLarge: React.FC<MenuProps> = ({ menu }) => (
+const NavbarLarge: React.FC<MenuProps> = ({ menu, currentPath }) => (
   <Box as="nav" data-testid="navbar-large" position="sticky" top={0} bg="white" zIndex="sticky" boxShadow="sm">
     <Container maxW="container.lg">
-      <HStack spacing={4} py={3}>
+      <HStack spacing={4}>
         <Box>
           <Logo />
         </Box>
 
-        <Box flexGrow={1} as="ul">
+        <HStack flexGrow={1} as="ul" spacing={4} fontSize="sm">
           {menu?.map(({ label, link }: { label: string; link: Document }) => (
-            <li key={label}>
-              <DocLink doc={link}>{label}</DocLink>
-            </li>
+            <DocLink key={label} doc={link} passHref>
+              <Box
+                py={3}
+                as="a"
+                color={hrefResolver(link) === currentPath ? 'black' : 'gray.500'}
+                borderBottom="1px solid"
+                borderBottomColor={hrefResolver(link) === currentPath ? 'gray.300' : 'transparent'}
+                _hover={{ color: 'black' }}
+              >
+                {label}
+              </Box>
+            </DocLink>
           ))}
-        </Box>
+        </HStack>
 
         <Button variant="outline" size="sm" rightIcon={ArrowTopRight}>
           Invista

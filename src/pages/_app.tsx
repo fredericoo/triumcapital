@@ -5,6 +5,7 @@ import Fonts from '@/styles/fonts';
 import Navbar from '@/components/Navbar';
 import moment from 'moment';
 import 'focus-visible/dist/focus-visible';
+import Footer from '@/components/Footer';
 
 const App: AppComponent = ({ Component, pageProps }) => {
   moment.locale('pt-br');
@@ -13,6 +14,7 @@ const App: AppComponent = ({ Component, pageProps }) => {
       <Fonts />
       <Navbar />
       <Component {...pageProps} />
+      <Footer />
     </ChakraProvider>
   );
 };

@@ -13,7 +13,7 @@ type CandlestickProps = {
 };
 
 const Candle = styled(Box, {
-  baseStyle: { position: 'absolute', width: '50%', left: '25%' },
+  baseStyle: { position: 'absolute', width: '75%', left: '12.5%' },
 });
 
 const Stick = styled(Box, {

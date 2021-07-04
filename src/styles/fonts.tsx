@@ -21,8 +21,8 @@ const Fonts: React.FC = () => (
 
       @font-face {
         font-family: 'roobert';
-        src: url('/fonts/roobert/roobert-bold-webfont.woff2') format('woff2'),
-          url('/fonts/roobert/roobert-bold-webfont.woff') format('woff');
+        src: url('/fonts/roobert/roobert-medium-webfont.woff2') format('woff2'),
+          url('/fonts/roobert/roobert-medium-webfont.woff') format('woff');
         font-weight: bold;
         font-style: normal;
       }

@@ -21,27 +21,33 @@ const PostScreen: React.FC<PostProps> = ({ data }) => {
       />
       <Container as="header" maxW="container.sm" py={8}>
         {data.published && (
-          <Text textTransform="uppercase" fontSize="xs" letterSpacing="wider">
+          <Text fontSize="sm" mb={2}>
             {moment(data.published, 'YYYY-MM-DD').format('LL')}
           </Text>
         )}
-        <Heading as="h1" size="2xl" letterSpacing="tight">
+        <Heading as="h1" size="xl" letterSpacing="tight" fontWeight="normal">
           {RichText.asText(data.title)}
         </Heading>
         {data.author?.data && (
-          <DocLink doc={data.author}>
-            <Link>{RichText.asText(data.author.data.title)}</Link>
-          </DocLink>
+          <Box color="gray.500">
+            por{' '}
+            <DocLink doc={data.author}>
+              <Link color="gray.900">{RichText.asText(data.author.data.title)}</Link>
+            </DocLink>
+          </Box>
+        )}
+        {data.excerpt && (
+          <Box mt={8} fontSize="lg">
+            <RichText render={data.excerpt} />
+          </Box>
         )}
       </Container>
       {data.cover.url && (
-        <Container maxW="container.lg">
-          <Picture src={data.cover.url} width={800} height={400} layout="responsive" objectFit="cover" />
-        </Container>
+        <Picture src={data.cover.url} width={800} height={400} layout="responsive" objectFit="cover" />
       )}
       {data.body && <Slices body={data.body} />}
       {data.author.data && (
-        <Box bg="gray.100" py={8}>
+        <Box bg="gray.50" py={8}>
           <Container maxW="container.md">
             <Author member={data.author.data} />
           </Container>

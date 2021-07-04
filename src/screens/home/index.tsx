@@ -1,4 +1,4 @@
-import { Container, Box, Grid, GridItem, Stack, Heading, Button } from '@chakra-ui/react';
+import { Container, Box, Grid, GridItem, Stack, Heading, Button, Text } from '@chakra-ui/react';
 import { RichText, RichTextBlock } from 'prismic-reactjs';
 import { ArrowTopRight } from '@/components/Icon';
 import { Document } from 'prismic-javascript/types/documents';
@@ -29,7 +29,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
                 zIndex={2}
                 spacing={8}
               >
-                <Heading as="h1" size="2xl" letterSpacing="-0.02em">
+                <Heading as="h1" size="xl" letterSpacing="-0.02em" fontWeight="normal">
                   {RichText.asText(data.headline)}
                 </Heading>
 
@@ -90,10 +90,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 
         <Grid {...gridProps} as="section" py={16}>
           <GridItem gridColumn={{ base: '1/-1', md: 'span 6' }}>
-            <Heading as="h2" size="lg" letterSpacing="-.02em" mb={4}>
+            <Text as="h2" fontSize="xl" fontWeight="bold" mb={4}>
               {RichText.asText(data.headline3)}
-            </Heading>
-            <Box ml={{ lg: 16 }}>
+            </Text>
+            <Box color="gray.600">
               <RichText render={data.content3} />
             </Box>
           </GridItem>

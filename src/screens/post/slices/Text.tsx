@@ -10,18 +10,20 @@ const containerChildrenStyles = {
     fontSize: '1em',
     lineHeight: '1.618em',
     marginBottom: '1.618em',
+    'b, strong': {
+      color: 'black',
+    },
     a: {
-      backgroundColor: 'var(--trium-colors-gray-100)',
-      padding: '.2em .3em',
-      borderRadius: '2px',
+      borderBottom: '8px solid',
+      borderBottomColor: 'var(--trium-colors-brand-100)',
       transition: '.15s ease-out',
       '&:hover': {
-        backgroundColor: 'var(--trium-colors-brand-200)',
+        borderBottomWidth: '0',
+        backgroundColor: 'var(--trium-colors-brand-100)',
       },
     },
     '.glossario': {
-      color: 'var(--trium-colors-brand-900)',
-      borderTop: '2px dotted',
+      borderBottom: '2px dotted',
     },
   },
   li: {

@@ -1,9 +1,9 @@
 import { Document } from '@prismicio/client/types/documents';
-import { Box } from '@chakra-ui/react';
+import { Box, Heading, LinkBox, LinkOverlay } from '@chakra-ui/react';
 import DocLink from '@/components/DocLink';
 import { RichText } from 'prismic-reactjs';
 import Picture from '@/components/Picture';
-import PostHeader from './PostHeader';
+import Caption from '../Caption';
 
 type PostProps = {
   doc: Document;
@@ -15,10 +15,14 @@ type PostProps = {
 
 const PostThumb: React.FC<PostProps> = ({ doc, withExcerpt, withThumb, thumbFormat = 'square', headingSize }) => {
   if (!doc.data) return null;
+
   const thumbnailUrl =
     thumbFormat === 'rectangle' ? doc.data.cover.url : doc.data.cover.Pequeno.url || '/img/icone-positivo.svg';
   return (
-    <Box>
+    <LinkBox
+      transition="all .3s ease-out"
+      _hover={{ bg: 'gray.100', boxShadow: '0 0 0 1rem var(--trium-colors-gray-100)' }}
+    >
       {withThumb && (
         <DocLink doc={doc}>
           <a>
@@ -31,13 +35,34 @@ const PostThumb: React.FC<PostProps> = ({ doc, withExcerpt, withThumb, thumbForm
           </a>
         </DocLink>
       )}
-      <PostHeader doc={doc} size={headingSize} />
+
+      <Caption>{doc.data.category}</Caption>
+      {doc.data.title && (
+        <DocLink doc={doc} passHref>
+          <LinkOverlay>
+            <Heading size={headingSize} as="h3" fontFamily="body">
+              {RichText.asText(doc.data.title)}
+            </Heading>
+          </LinkOverlay>
+        </DocLink>
+      )}
+      {doc.data.author.data && (
+        <Box color="gray.500">
+          por{' '}
+          <DocLink doc={doc.data.author} passHref>
+            <Box color="gray.900" as="a" _hover={{ borderBlockEnd: '1px solid' }}>
+              {RichText.asText(doc.data.author.data.title)}
+            </Box>
+          </DocLink>
+        </Box>
+      )}
+
       {withExcerpt && doc.data.excerpt && (
-        <Box noOfLines={4} fontSize="sm" color="gray.600">
+        <Box mt={3} noOfLines={4} color="gray.600" maxW="66ch">
           <RichText render={doc.data.excerpt} />
         </Box>
       )}
-    </Box>
+    </LinkBox>
   );
 };
 
