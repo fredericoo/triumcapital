@@ -17,7 +17,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
   if (!data) return null;
   return (
     <>
-      <SEO description={RichText.asText(data.headline)} />
+      <SEO
+        title={data.tabtitle}
+        description={data.metadescription || RichText.asText(data.headline)}
+        image={data.ogimage?.url}
+      />
       <Grid minH="80vh" as="section">
         <GridItem as="header" gridColumn="1" gridRow="1" zIndex={2} pointerEvents={{ base: 'all', md: 'none' }}>
           <Container maxW="container.lg">

@@ -3,11 +3,17 @@ import { Container, SimpleGrid, VStack, Heading, Box, Text, VisuallyHidden } fro
 import { RichTextBlock, RichText } from 'prismic-reactjs';
 import Picture from '@/components/Picture';
 import { PrismicImage } from '@/utils/types';
+import SEO from '@/components/SEO';
 
 const ServicesScreen: React.FC<ServicesProps> = ({ doc }) => {
   if (!doc?.data) return null;
   return (
     <Box position="relative">
+      <SEO
+        title={doc.data.tabtitle || RichText.asText(doc.data.title)}
+        description={doc.data.metadescription}
+        image={doc.data.ogimage?.url}
+      />
       <Box
         display={{ base: 'none', md: 'block' }}
         bg="gray.50"
@@ -19,7 +25,7 @@ const ServicesScreen: React.FC<ServicesProps> = ({ doc }) => {
       />
       <Container maxW="container.lg" px={0}>
         <VisuallyHidden>
-          <Heading as="h1">Serviços</Heading>
+          <Heading as="h1">{RichText.asText(doc.data.title)}</Heading>
         </VisuallyHidden>
         <SimpleGrid columns={{ base: 1, md: 2 }} columnGap={32}>
           {doc?.data['for-you'] && <ServicesColumn label="Para você" items={doc?.data['for-you']} />}
