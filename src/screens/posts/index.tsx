@@ -12,12 +12,12 @@ type PostsProps = {
   fetchMore: (after: string) => Promise<FetchedPosts>;
 };
 
-const getKey = (_pageIndex: number, previousPageData: FetchedPosts | null): string => {
-  if (!previousPageData?.results) return 'beginning';
-  return previousPageData.results[previousPageData.results.length - 1].id;
-};
-
 const PostsScreen: React.FC<PostsProps> = ({ initialData, fetchMore, totalCount = 999 }) => {
+  const getKey = (_pageIndex: number, previousPageData: FetchedPosts | null): string => {
+    if (!previousPageData?.results) return 'beginning';
+    return previousPageData.results[previousPageData.results.length - 1].id;
+  };
+
   const { data, size, setSize } = useSWRInfinite<FetchedPosts>(getKey, fetchMore, {
     initialData,
   });

@@ -9,11 +9,6 @@ import Picture from '@/components/Picture';
 import Link from 'next/link';
 import SEO from '@/components/SEO';
 
-const getKey = (_pageIndex: number, previousPageData: FetchedPosts | null): string => {
-  if (!previousPageData?.results) return 'beginning';
-  return previousPageData.results[previousPageData.results.length - 1].id;
-};
-
 type MemberScreenProps = {
   memberData: MemberData;
   initialData: FetchedPosts[];
@@ -22,6 +17,10 @@ type MemberScreenProps = {
 };
 
 const MemberScreen: React.FC<MemberScreenProps> = ({ memberData, initialData, fetchMore, totalCount }) => {
+  const getKey = (_pageIndex: number, previousPageData: FetchedPosts | null): string => {
+    if (!previousPageData?.results) return 'beginning';
+    return previousPageData.results[previousPageData.results.length - 1].id;
+  };
   const { data, size, setSize } = useSWRInfinite<FetchedPosts>(getKey, fetchMore, {
     initialData,
   });
@@ -70,34 +69,36 @@ const MemberScreen: React.FC<MemberScreenProps> = ({ memberData, initialData, fe
           <RichText render={memberData.content} />
         </Box>
       </SimpleGrid>
-      <Box>
-        <Text as="h2" mb={8} textAlign="center" color="gray.600">
-          Artigos escritos por {RichText.asText(memberData.title)}
-        </Text>
-        <SimpleGrid columns={{ base: 1, md: 3 }} gap={8}>
-          {posts.map(doc => (
-            <PostThumb key={doc.uid} doc={doc} headingSize="md" />
-          ))}
-        </SimpleGrid>
-        <VStack spacing={4} py={8}>
-          <Text textAlign="center" fontSize="xs" letterSpacing="wider" color="gray.700">
-            Mostrando {postCount} de {totalCount} posts
+      {totalCount > 0 && (
+        <Box>
+          <Text as="h2" mb={8} textAlign="center" color="gray.600">
+            Artigos escritos por {RichText.asText(memberData.title)}
           </Text>
-          <Progress value={postCount} max={totalCount} size="md" width={36} height={1} />
-          {postCount < totalCount && (
-            <Button
-              onClick={() => (setIsLoading(true), setSize(size + 1))}
-              size="sm"
-              px={6}
-              py={4}
-              variant="outline"
-              isLoading={isLoading}
-            >
-              Carregar mais
-            </Button>
-          )}
-        </VStack>
-      </Box>
+          <SimpleGrid columns={{ base: 1, md: 3 }} gap={8}>
+            {posts.map(doc => (
+              <PostThumb key={doc.uid} doc={doc} headingSize="md" />
+            ))}
+          </SimpleGrid>
+          <VStack spacing={4} py={8}>
+            <Text textAlign="center" fontSize="xs" letterSpacing="wider" color="gray.700">
+              Mostrando {postCount} de {totalCount} posts
+            </Text>
+            <Progress value={postCount} max={totalCount} size="md" width={36} height={1} />
+            {postCount < totalCount && (
+              <Button
+                onClick={() => (setIsLoading(true), setSize(size + 1))}
+                size="sm"
+                px={6}
+                py={4}
+                variant="outline"
+                isLoading={isLoading}
+              >
+                Carregar mais
+              </Button>
+            )}
+          </VStack>
+        </Box>
+      )}
     </Container>
   );
 };
