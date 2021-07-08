@@ -10,7 +10,9 @@ type MemberCardProps = { member: PrismicDocument<MemberData> };
 const MemberCard: React.FC<MemberCardProps> = ({ member }) => (
   <LinkBox>
     <Stack spacing={2}>
-      <Picture src={member.data.image.url} width={800} height={800} objectFit="contain" bg="transparent" />
+      {member.data.image?.url && (
+        <Picture src={member.data.image.url} width={800} height={800} objectFit="contain" bg="transparent" />
+      )}
       <DocLink doc={member} passHref>
         <LinkOverlay _hover={{ textDecoration: 'underline', textUnderlineOffset: '.3em' }}>
           <Text as="h3" fontWeight="bold">

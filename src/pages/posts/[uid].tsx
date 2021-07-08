@@ -1,9 +1,23 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
-import { WithDoc, client } from '@/utils/prismic';
+import { client } from '@/utils/prismic';
 import PostScreen from '@/screens/post';
 import useCookieToast from '@/utils/hooks/useCookieToast';
+import { RichTextBlock } from 'prismic-reactjs';
+import { PrismicDocument, PrismicImage } from '@/utils/types';
+import { MemberData } from '../equipe/[uid]';
 
-const Post: React.FC<WithDoc> = ({ doc }) => {
+export type PostData = {
+  published: string;
+  category: string;
+  title: RichTextBlock[];
+  author: PrismicDocument<MemberData>;
+  cover: PrismicImage;
+  excerpt: RichTextBlock[];
+};
+
+type PostProps = { doc: PrismicDocument<PostData> };
+
+const Post: React.FC<PostProps> = ({ doc }) => {
   useCookieToast();
   const data = doc?.data;
   if (!data) return null;

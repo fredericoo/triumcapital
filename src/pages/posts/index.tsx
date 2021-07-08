@@ -3,12 +3,14 @@ import { client } from '@/utils/prismic';
 import useCookieToast from '@/utils/hooks/useCookieToast';
 import PostsScreen from '@/screens/posts';
 import ApiSearchResponse from '@prismicio/client/types/ApiSearchResponse';
+import { PrismicDocument } from '@/utils/types';
+import { PostData } from './[uid]';
 
-type PostsProps = { data: ApiSearchResponse };
+type PostsProps = { data: Omit<ApiSearchResponse, 'results'> & { results: PrismicDocument<PostData>[] } };
 
 const postsPerPage = 6;
 
-export type FetchedPosts = ApiSearchResponse;
+export type FetchedPosts = PostsProps['data'];
 const fetchPosts = async (after: string): Promise<FetchedPosts> => {
   const query = await client.query('[at(document.type,"post")]', {
     fetch: ['post.title', 'post.excerpt', 'post.author', 'post.published', 'post.cover', 'post.category'],
