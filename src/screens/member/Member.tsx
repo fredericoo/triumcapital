@@ -16,11 +16,12 @@ type MemberScreenProps = {
   totalCount: number;
 };
 
+const getKey = (_pageIndex: number, previousPageData: FetchedPosts | null): string => {
+  if (!previousPageData?.results) return 'member: beginning';
+  return previousPageData.results[previousPageData.results.length - 1].id;
+};
+
 const MemberScreen: React.FC<MemberScreenProps> = ({ memberData, initialData, fetchMore, totalCount }) => {
-  const getKey = (_pageIndex: number, previousPageData: FetchedPosts | null): string => {
-    if (!previousPageData?.results) return 'beginning';
-    return previousPageData.results[previousPageData.results.length - 1].id;
-  };
   const { data, size, setSize } = useSWRInfinite<FetchedPosts>(getKey, fetchMore, {
     initialData,
   });
