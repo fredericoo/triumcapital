@@ -1,5 +1,5 @@
 import { Document } from 'prismic-javascript/types/documents';
-import { Container, HStack, Box, Button } from '@chakra-ui/react';
+import { Container, HStack, Box, Button, Text } from '@chakra-ui/react';
 import DocLink from '@/components/DocLink';
 import { ArrowTopRight } from '@/components/Icon';
 import Logo from './Logo';
@@ -10,22 +10,24 @@ const NavbarLarge: React.FC<MenuProps> = ({ menu, currentPath }) => (
   <Box as="nav" data-testid="navbar-large" position="sticky" top={0} bg="white" zIndex="sticky" boxShadow="sm">
     <Container maxW="container.lg">
       <HStack spacing={8}>
-        <Box>
+        <Box py={4}>
           <Logo />
         </Box>
 
-        <HStack flexGrow={1} as="ul" spacing={4} fontSize="sm">
+        <HStack flexGrow={1} as="ul" spacing={4} fontSize="sm" alignSelf="stretch">
           {menu?.map(({ label, link }: { label: string; link: Document }) => (
             <DocLink key={label} doc={link} passHref>
               <Box
-                py={3}
+                h="100%"
                 as="a"
                 color={hrefResolver(link) === currentPath ? 'black' : 'gray.500'}
                 borderBottom="1px solid"
                 borderBottomColor={hrefResolver(link) === currentPath ? 'gray.300' : 'transparent'}
                 _hover={{ color: 'black' }}
+                display="flex"
+                alignItems="center"
               >
-                {label}
+                <Text>{label}</Text>
               </Box>
             </DocLink>
           ))}
