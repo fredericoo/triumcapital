@@ -37,14 +37,12 @@ const fetchPostsByMember = async (after: string, memberId: string): Promise<Fetc
 };
 
 const Member: React.FC<MemberProps> = ({ doc, postsByMember }) => {
-  const data = doc?.data;
-  if (!data) return null;
-
-  const fetchMore = async (after: string): Promise<FetchedPosts> => await fetchPostsByMember(after, doc.id);
+  const fetchMore = async (after: string): Promise<FetchedPosts> =>
+    await fetchPostsByMember(after.split(':')[1], doc.id);
 
   return (
     <MemberScreen
-      memberData={data}
+      memberDoc={doc}
       initialData={[postsByMember]}
       fetchMore={fetchMore}
       totalCount={postsByMember.total_results_size}

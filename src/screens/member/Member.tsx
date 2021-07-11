@@ -8,20 +8,21 @@ import { MemberData } from '@/pages/equipe/[uid]';
 import Picture from '@/components/Picture';
 import Link from 'next/link';
 import SEO from '@/components/SEO';
+import { PrismicDocument } from '@/utils/types';
 
 type MemberScreenProps = {
-  memberData: MemberData;
+  memberDoc: PrismicDocument<MemberData>;
   initialData: FetchedPosts[];
-  fetchMore: (after: string, memberId: string) => Promise<FetchedPosts>;
+  fetchMore: (after: string) => Promise<FetchedPosts>;
   totalCount: number;
 };
 
-const getKey = (_pageIndex: number, previousPageData: FetchedPosts | null): string => {
-  if (!previousPageData?.results) return 'member: beginning';
-  return previousPageData.results[previousPageData.results.length - 1].id;
-};
+const MemberScreen: React.FC<MemberScreenProps> = ({ memberDoc, initialData, fetchMore, totalCount }) => {
+  const getKey = (_pageIndex: number, previousPageData: FetchedPosts | null): string => {
+    if (!previousPageData?.results) return `member${memberDoc.id}:beginning`;
+    return `member${memberDoc.id}:${previousPageData.results[previousPageData.results.length - 1].id}`;
+  };
 
-const MemberScreen: React.FC<MemberScreenProps> = ({ memberData, initialData, fetchMore, totalCount }) => {
   const { data, size, setSize } = useSWRInfinite<FetchedPosts>(getKey, fetchMore, {
     initialData,
   });
@@ -39,27 +40,27 @@ const MemberScreen: React.FC<MemberScreenProps> = ({ memberData, initialData, fe
   return (
     <Container maxW="container.lg">
       <SEO
-        title={RichText.asText(memberData.title)}
-        description={RichText.asText(memberData.content)}
-        image={memberData.image?.url}
+        title={RichText.asText(memberDoc.data.title)}
+        description={RichText.asText(memberDoc.data.content)}
+        image={memberDoc.data.image?.url}
       />
       <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} py={16}>
         <Box maxW="300px">
-          {memberData.image && (
+          {memberDoc.data.image && (
             <Picture
-              src={memberData.image.url}
-              height={memberData.image.dimensions.height}
-              width={memberData.image.dimensions.width}
-              alt={memberData.image.alt}
+              src={memberDoc.data.image.url}
+              height={memberDoc.data.image.dimensions.height}
+              width={memberDoc.data.image.dimensions.width}
+              alt={memberDoc.data.image.alt}
             />
           )}
         </Box>
         <Box>
           <Text as="h1" fontSize="3xl">
-            {RichText.asText(memberData.title)}
+            {RichText.asText(memberDoc.data.title)}
           </Text>
-          {memberData.linkedin?.url && (
-            <Link href={memberData.linkedin.url} passHref>
+          {memberDoc.data.linkedin?.url && (
+            <Link href={memberDoc.data.linkedin.url} passHref>
               <Box as="a" target="_blank" display="inline-block" w="1em" _hover={{ color: 'brand.900' }}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M22.23 0H1.77C.8 0 0 .77 0 1.72v20.56C0 23.23.8 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.2 0 22.23 0zM7.27 20.1H3.65V9.24h3.62V20.1zM5.47 7.76h-.03c-1.22 0-2-.83-2-1.87 0-1.06.8-1.87 2.05-1.87 1.24 0 2 .8 2.02 1.87 0 1.04-.78 1.87-2.05 1.87zM20.34 20.1h-3.63v-5.8c0-1.45-.52-2.45-1.83-2.45-1 0-1.6.67-1.87 1.32-.1.23-.11.55-.11.88v6.05H9.28s.05-9.82 0-10.84h3.63v1.54a3.6 3.6 0 0 1 3.26-1.8c2.39 0 4.18 1.56 4.18 4.89v6.21z" />
@@ -67,13 +68,13 @@ const MemberScreen: React.FC<MemberScreenProps> = ({ memberData, initialData, fe
               </Box>
             </Link>
           )}
-          <RichText render={memberData.content} />
+          <RichText render={memberDoc.data.content} />
         </Box>
       </SimpleGrid>
       {totalCount > 0 && (
         <Box>
           <Text as="h2" mb={8} textAlign="center" color="gray.600">
-            Artigos escritos por {RichText.asText(memberData.title)}
+            Artigos escritos por {RichText.asText(memberDoc.data.title)}
           </Text>
           <SimpleGrid columns={{ base: 1, md: 3 }} gap={8}>
             {posts.map(doc => (
