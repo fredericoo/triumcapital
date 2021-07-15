@@ -4,9 +4,12 @@ import { Document } from 'prismic-javascript/types/documents';
 
 type DocLinkProps = {
   doc: Document;
-  href?: string | null;
+  href?: string;
 } & Omit<LinkProps, 'href'>;
 
-const DocLink: React.FC<DocLinkProps> = ({ doc, ...props }) => <NextLink href={hrefResolver(doc)} {...props} />;
+const DocLink: React.FC<DocLinkProps> = ({ doc, ...props }) => {
+  const href = hrefResolver(doc);
+  return <NextLink href={href} {...props} />;
+};
 
 export default DocLink;
