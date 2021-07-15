@@ -10,6 +10,7 @@ import Pillar from './Pillar';
 import Number from './Number';
 import Stocks from './Stocks';
 import Posts from './Posts';
+import { hrefResolver } from '@/prismic-config';
 
 type HomeScreenProps = { data?: Document['data']; posts?: Document[] };
 
@@ -39,7 +40,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 
                 <RichText render={data.content} />
 
-                <Button pointerEvents="all" alignSelf="flex-start" rightIcon={ArrowTopRight}>
+                <Button
+                  href={hrefResolver(data.link)}
+                  as="a"
+                  pointerEvents="all"
+                  alignSelf="flex-start"
+                  rightIcon={ArrowTopRight}
+                >
                   {data.cta}
                 </Button>
               </Stack>
@@ -85,7 +92,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
               <Heading as="h2" size="lg" textAlign="center" letterSpacing="-.02em">
                 {RichText.asText(data.headline2)}
               </Heading>
-              <Button alignSelf="center" rightIcon={ArrowTopRight}>
+              <Button href={hrefResolver(data.link2)} alignSelf="center" rightIcon={ArrowTopRight}>
                 {data.cta2}
               </Button>
             </Stack>
