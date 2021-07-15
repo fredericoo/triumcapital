@@ -1,17 +1,13 @@
-import { Document } from 'prismic-javascript/types/documents';
-import useSWR from 'swr';
-import { client } from '@/utils/prismic';
 import { useMediaQuery } from '@chakra-ui/react';
 import NavbarLarge from './NavbarLarge';
 import NavbarSmall from './NavbarSmall';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-
-const fetcher = async (): Promise<Document> => await client.getSingle('config', {});
+import useConfig from '@/utils/useConfig';
 
 const Navbar: React.FC = () => {
   const [matchesMediaQuery] = useMediaQuery('(min-width: 768px)');
-  const { data: config } = useSWR('config', fetcher, { revalidateOnFocus: false });
+  const { config } = useConfig();
   const { asPath } = useRouter();
 
   const [isLarge, setIsLarge] = useState<boolean | undefined>(undefined);

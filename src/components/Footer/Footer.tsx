@@ -1,20 +1,38 @@
-import { Box, Container, SimpleGrid, Heading, VisuallyHidden, Text, List, ListItem } from '@chakra-ui/react';
+import useConfig from '@/utils/useConfig';
+import { Box, Container, SimpleGrid, GridItem, Heading, VisuallyHidden, Text, Grid } from '@chakra-ui/react';
+import { RichText } from 'prismic-reactjs';
 
-const columns = new Array(4).fill(0).map((_, index) => ({
-  label: `Column ${index}`,
-  links: new Array(5).fill(0).map((_, index) => ({ label: `Link ${index}`, url: 'https://google.com' })),
-}));
 const Footer: React.FC = () => {
+  const { config } = useConfig();
+
   return (
     <Box as="footer" py={16}>
       <VisuallyHidden>
         <Heading as="h2">Rodapé</Heading>
       </VisuallyHidden>
-      <Container maxW="container.lg">
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} gap={8}>
-          {columns.map(column => (
-            <FooterColumn key={column.label} label={column.label} links={column.links} />
-          ))}
+      <Container maxW="container.lg" fontSize="sm" borderTop="1px solid" borderColor="gray.200" pt={8}>
+        <SimpleGrid columns={{ base: 1, md: 3 }} gap={8}>
+          <GridItem>
+            {config?.data.heading && (
+              <Text as="h3" fontWeight="bold" mb="1em">
+                {RichText.asText(config?.data.heading)}
+              </Text>
+            )}
+            {config?.data.address && (
+              <Text as="div" color="gray.500" mb="1em">
+                <RichText render={config?.data.address} />
+              </Text>
+            )}
+            {config?.data.contacts.map(contact => (
+              <Grid templateColumns={'1rem 1fr'} key={contact.label} ml={{ md: '-1rem' }}>
+                <Text fontWeight="bold">{contact.label}</Text>
+                <Text as="div">{contact.value && <RichText render={contact.value} />}</Text>
+              </Grid>
+            ))}
+          </GridItem>
+          <GridItem colSpan={{ base: 1, md: 2 }} fontSize="xs" color="gray.600">
+            {config?.data.disclaimer && <RichText render={config?.data.disclaimer} />}
+          </GridItem>
         </SimpleGrid>
       </Container>
     </Box>
@@ -22,18 +40,3 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
-
-const FooterColumn: React.FC<{ label: string; links: { label: string; url: string }[] }> = ({ label, links }) => {
-  return (
-    <Box key={label}>
-      <Text as="h3" color="black" pb={2} mb={2} borderBottom="1px solid" borderBottomColor="gray.200">
-        {label}
-      </Text>
-      <List color="gray.600">
-        {links.map(link => (
-          <ListItem key={link.label}>{link.label}</ListItem>
-        ))}
-      </List>
-    </Box>
-  );
-};

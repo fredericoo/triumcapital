@@ -1,4 +1,3 @@
-import { Document } from 'prismic-javascript/types/documents';
 import {
   Container,
   HStack,
@@ -35,7 +34,14 @@ const NavbarSmall: React.FC<MenuProps> = ({ menu, currentPath }) => {
             <Logo />
           </Box>
           <Box display="flex" flex="1" justifyContent="flex-end">
-            <Button variant="solid" size="sm">
+            <Button
+              as="a"
+              href="https://cadastro.xpi.com.br/desktop/step/1?assessor=A69864"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="solid"
+              size="sm"
+            >
               Invista
             </Button>
           </Box>
@@ -49,7 +55,7 @@ const NavbarSmall: React.FC<MenuProps> = ({ menu, currentPath }) => {
           </DrawerHeader>
           <DrawerBody p={3}>
             <Box borderRadius="md" overflow="hidden">
-              {menu?.map(({ label, link }: { label: string; link: Document }) => (
+              {menu?.map(({ label, link }) => (
                 <DocLink key={label} doc={link} passHref>
                   <Box display="block" as="a" p={3} bg="gray.100" mb="1px">
                     {label}

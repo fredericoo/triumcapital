@@ -24,7 +24,7 @@ const Author: React.FC<AuthorProps> = ({ member }) => (
         </Heading>
       )}
       {member.content && (
-        <Text fontSize="sm" color="gray.700">
+        <Text as="div" fontSize="sm" color="gray.700">
           <RichText render={member.content} />
         </Text>
       )}

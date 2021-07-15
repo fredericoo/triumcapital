@@ -1,4 +1,3 @@
-import { Document } from 'prismic-javascript/types/documents';
 import { Container, HStack, Box, Button, Text } from '@chakra-ui/react';
 import DocLink from '@/components/DocLink';
 import { ArrowTopRight } from '@/components/Icon';
@@ -15,7 +14,7 @@ const NavbarLarge: React.FC<MenuProps> = ({ menu, currentPath }) => (
         </Box>
 
         <HStack flexGrow={1} as="ul" spacing={4} fontSize="sm" alignSelf="stretch">
-          {menu?.map(({ label, link }: { label: string; link: Document }) => (
+          {menu?.map(({ label, link }) => (
             <DocLink key={label} doc={link} passHref>
               <Box
                 h="100%"
@@ -33,7 +32,15 @@ const NavbarLarge: React.FC<MenuProps> = ({ menu, currentPath }) => (
           ))}
         </HStack>
 
-        <Button variant="outline" size="sm" rightIcon={ArrowTopRight}>
+        <Button
+          as="a"
+          href="https://cadastro.xpi.com.br/desktop/step/1?assessor=A69864"
+          target="_blank"
+          rel="noopener noreferrer"
+          variant="outline"
+          size="sm"
+          rightIcon={ArrowTopRight}
+        >
           Invista
         </Button>
       </HStack>

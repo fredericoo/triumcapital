@@ -1,11 +1,12 @@
+import { MenuItem } from '@/utils/useConfig';
 import { render, fireEvent } from '@testing-library/react';
-import { MenuItem } from './types';
 import NavbarLarge from './NavbarLarge';
 import NavbarSmall from './NavbarSmall';
 
 const generateMenuItem = (): MenuItem => ({
   label: Math.random().toString(36).substring(7),
   link: {
+    link_type: 'Document',
     id: '',
     type: 'doc',
     href: '',

@@ -31,6 +31,10 @@ const containerChildrenStyles = {
       marginBottom: '1.618em',
     },
   },
+  h3: {
+    fontWeight: 700,
+    marginBottom: '1.618em',
+  },
 };
 
 const TextSlice: React.FC<TextProps> = ({ content }) => {
