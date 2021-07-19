@@ -39,6 +39,7 @@ const BodyContainer = styled(Container)`
     font-size: 2em;
     font-weight: bold;
     margin-bottom: calc(1.618em / 2);
+    line-height: 1.2;
   }
   h3 {
     font-weight: bold;
