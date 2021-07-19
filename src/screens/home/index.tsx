@@ -141,11 +141,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
               lg: '1fr 1fr 1fr 1fr',
             }}
           >
-            {data.team
-              .slice(0, 4)
-              .map(
-                ({ member }: { member?: Document }) => member?.data && <MemberCard key={member.uid} member={member} />
-              )}
+            {data.team.map(
+              ({ member }: { member?: Document }) => member?.data && <MemberCard key={member.uid} member={member} />
+            )}
           </Grid>
         </Stack>
       </Container>
