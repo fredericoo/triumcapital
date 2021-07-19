@@ -44,8 +44,7 @@ const Slices: React.FC<SlicesProps> = ({ body }) => {
       py={8}
       gridTemplateColumns={{
         base: '[screen-start main-start] 1fr [main-end screen-end]',
-        lg: '[screen-start] .5fr [main-start] minmax(33ch, 66ch) [main-end] 1fr [screen-end]',
-        xl: '[screen-start] 1fr [main-start] minmax(33ch, 77ch) [main-end] 1fr [screen-end]',
+        lg: '[screen-start] 1fr [main-start] repeat(3,1fr) [main-end] 1fr [screen-end]',
       }}
       rowGap="1.618em"
     >

@@ -11,6 +11,7 @@ import Number from './Number';
 import Stocks from './Stocks';
 import Posts from './Posts';
 import { hrefResolver } from '@/prismic-config';
+import { PrismicImage } from '@/utils/types';
 
 type HomeScreenProps = { data?: Document['data']; posts?: Document[] };
 
@@ -110,13 +111,20 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
           </GridItem>
           <GridItem gridColumn={{ base: '1/-1', sm: '5/-1', md: '7/-1', lg: '9/-1' }}>
             <Stack spacing={8}>
-              {data.numbers.map((entry: { number_title: RichTextBlock[]; number_content: RichTextBlock[] }) => (
-                <Number
-                  key={RichText.asText(entry.number_title)}
-                  heading={entry.number_title}
-                  text={entry.number_content}
-                />
-              ))}
+              {data.numbers.map(
+                (entry: {
+                  number_title: RichTextBlock[];
+                  number_content: RichTextBlock[];
+                  number_image: PrismicImage;
+                }) => (
+                  <Number
+                    key={RichText.asText(entry.number_title)}
+                    heading={entry.number_title}
+                    text={entry.number_content}
+                    image={entry.number_image}
+                  />
+                )
+              )}
             </Stack>
           </GridItem>
         </Grid>
