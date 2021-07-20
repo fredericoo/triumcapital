@@ -9,7 +9,7 @@ const Number: React.FC<NumberProps> = ({ image, heading, text }) => (
   <Grid templateColumns="repeat(4, 1fr)">
     <GridItem gridColumn="1/-1">
       {image?.url ? (
-        <Box maxW="6rem" mb={2}>
+        <Box mb={2}>
           <Picture
             src={image.url}
             width={image.dimensions.width}
