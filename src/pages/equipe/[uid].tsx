@@ -70,7 +70,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       doc,
       postsByMember,
     },
-    revalidate: 600,
+    revalidate: 60,
   };
 };
 

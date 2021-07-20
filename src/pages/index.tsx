@@ -29,7 +29,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       doc: doc || {},
       posts: posts.results || [],
     },
-    revalidate: 600,
+    revalidate: 60,
   };
 };
 

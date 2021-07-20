@@ -42,7 +42,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       doc,
     },
-    revalidate: 600,
+    revalidate: 60,
   };
 };
 

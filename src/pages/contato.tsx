@@ -25,7 +25,7 @@ export const getStaticProps: GetStaticProps<ContactProps> = async ({ locale }) =
     props: {
       doc: doc || {},
     },
-    revalidate: 600,
+    revalidate: 60,
   };
 };
 

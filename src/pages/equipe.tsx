@@ -27,7 +27,7 @@ export const getStaticProps: GetStaticProps<TeamProps> = async ({ locale }) => {
     props: {
       doc: doc || {},
     },
-    revalidate: 600,
+    revalidate: 60,
   };
 };
 
