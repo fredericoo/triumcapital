@@ -29,8 +29,8 @@ async function market(_req: NextApiRequest, res: NextApiResponse): Promise<void>
 
   const tradingHours: TradingHours = {
     '^BVSP': {
-      open: moment().set({ hour: 14, minute: 0, second: 0, millisecond: 0 }).unix(),
-      close: moment().set({ hour: 22, minute: 0, second: 0, millisecond: 0 }).unix(),
+      open: moment().set({ hour: 12, minute: 0, second: 0, millisecond: 0 }).unix(),
+      close: moment().set({ hour: 20, minute: 0, second: 0, millisecond: 0 }).unix(),
     },
     '^GSPC': {
       open: moment().set({ hour: 14, minute: 30, second: 0, millisecond: 0 }).unix(),
