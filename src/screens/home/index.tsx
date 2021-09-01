@@ -12,6 +12,7 @@ import Stocks from './Stocks';
 import Posts from './Posts';
 import { hrefResolver } from '@/prismic-config';
 import { PrismicImage } from '@/utils/types';
+import Link from 'next/link';
 
 type HomeScreenProps = { data?: Document['data']; posts?: Document[] };
 
@@ -93,9 +94,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
               <Heading as="h2" size="lg" textAlign="center" letterSpacing="-.02em">
                 {RichText.asText(data.headline2)}
               </Heading>
-              <Button href={hrefResolver(data.link2)} alignSelf="center" rightIcon={ArrowTopRight}>
-                {data.cta2}
-              </Button>
+              <Link href={hrefResolver(data.link2)} passHref>
+                <Button alignSelf="center" rightIcon={ArrowTopRight}>
+                  {data.cta2}
+                </Button>
+              </Link>
             </Stack>
           </GridItem>
         </Grid>
