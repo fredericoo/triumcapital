@@ -36,7 +36,7 @@ type CaptionProps = {
 const TopCaption: React.FC<CaptionProps> = ({ children, direction }) => {
   const positionProps = { [direction]: 2, textAlign: direction };
   return (
-    <Box position="absolute" fontSize="xs" bottom={2} whiteSpace="nowrap" {...positionProps}>
+    <Box position="absolute" fontSize="xs" bottom={2} bg="white" whiteSpace="nowrap" {...positionProps}>
       {children}
     </Box>
   );
