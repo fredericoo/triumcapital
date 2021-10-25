@@ -8,7 +8,7 @@ import SEO from '@/components/SEO';
 import MemberCard from '@/components/MemberCard';
 import Pillar from './Pillar';
 import Number from './Number';
-import Stocks from './Stocks';
+// import Stocks from './Stocks';
 import Posts from './Posts';
 import { hrefResolver } from '@/prismic-config';
 import { PrismicImage } from '@/utils/types';
@@ -62,7 +62,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ data, posts }) => {
 
       {posts && <Posts data={posts} />}
 
-      <Stocks />
+      {/* <Stocks /> */}
 
       <Container maxW="container.lg">
         <Grid
