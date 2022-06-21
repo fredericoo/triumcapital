@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-export const GTAG = 'G-MM2LRFD4C2';
+export const GTAG = 'G-X1CS6JGRRF';
 
 declare global {
   interface Window {
