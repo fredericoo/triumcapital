@@ -9,18 +9,24 @@ const Button = {
     padding: '.618em 1.618em',
   },
   sizes: {
+    sm: {
+      px: 4,
+      pt: 2,
+      pb: 2.5,
+    },
     md: {
       px: 6,
-      py: 4,
+      pt: 4,
+      pb: 5,
     },
   },
   variants: {
     primary: {
-      bg: 'brand.100',
-      color: 'black',
+      bg: 'brand.900',
+      color: 'white',
       _hover: {
-        bg: 'gray.100',
-        color: 'black',
+        bg: 'brand.700',
+        transform: 'scale(1.05)',
       },
     },
   },

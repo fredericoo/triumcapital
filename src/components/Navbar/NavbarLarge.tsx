@@ -1,6 +1,6 @@
 import { Container, HStack, Box, Button, Text } from '@chakra-ui/react';
 import DocLink from '@/components/DocLink';
-import { ArrowTopRight } from '@/components/Icon';
+import { ArrowTopRight, Whatsapp } from '@/components/Icon';
 import Logo from './Logo';
 import { MenuProps } from './types';
 import { hrefResolver } from '@/prismic-config';
@@ -13,12 +13,13 @@ const NavbarLarge: React.FC<MenuProps> = ({ menu, currentPath }) => (
           <Logo />
         </Box>
 
-        <HStack flexGrow={1} as="ul" spacing={4} fontSize="sm" alignSelf="stretch">
+        <HStack flexGrow={1} as="ul" spacing={6} fontSize="sm" alignSelf="stretch">
           {menu?.map(({ label, link }) => (
             <DocLink key={label} doc={link} passHref>
               <Box
                 h="100%"
                 as="a"
+                fontSize="md"
                 color={hrefResolver(link) === currentPath ? 'black' : 'gray.500'}
                 borderBottom="1px solid"
                 borderBottomColor={hrefResolver(link) === currentPath ? 'gray.300' : 'transparent'}
@@ -32,17 +33,32 @@ const NavbarLarge: React.FC<MenuProps> = ({ menu, currentPath }) => (
           ))}
         </HStack>
 
-        <Button
-          as="a"
-          href="https://cadastro.xpi.com.br/desktop/step/1?assessor=A69864"
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="outline"
-          size="sm"
-          rightIcon={ArrowTopRight}
-        >
-          Invista
-        </Button>
+        <HStack>
+          <Button
+            as="a"
+            href="https://wa.me/5531994266130"
+            target="_blank"
+            rel="noopener noreferrer"
+            size="sm"
+            px="1"
+            variant="solid"
+            colorScheme="whatsapp"
+            leftIcon={Whatsapp}
+            iconSpacing="0"
+          />
+          <Button
+            as="a"
+            href="https://cadastro.xpi.com.br/desktop/step/1?assessor=A69864"
+            target="_blank"
+            rel="noopener noreferrer"
+            size="sm"
+            pr={2}
+            pl={4}
+            rightIcon={ArrowTopRight}
+          >
+            Invista
+          </Button>
+        </HStack>
       </HStack>
     </Container>
   </Box>

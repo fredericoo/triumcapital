@@ -15,6 +15,7 @@ import DocLink from '@/components/DocLink';
 import Logo from './Logo';
 import { MenuProps } from './types';
 import { useEffect } from 'react';
+import { Whatsapp } from '../Icon';
 
 const NavbarSmall: React.FC<MenuProps> = ({ menu, currentPath }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,18 +34,29 @@ const NavbarSmall: React.FC<MenuProps> = ({ menu, currentPath }) => {
           <Box>
             <Logo />
           </Box>
-          <Box display="flex" flex="1" justifyContent="flex-end">
+          <HStack flex="1" spacing="1" justifyContent="flex-end">
+            <Button
+              as="a"
+              href="https://wa.me/5531994266130"
+              target="_blank"
+              rel="noopener noreferrer"
+              size="sm"
+              px="1"
+              variant="solid"
+              colorScheme="whatsapp"
+              leftIcon={Whatsapp}
+              iconSpacing="0"
+            />
             <Button
               as="a"
               href="https://cadastro.xpi.com.br/desktop/step/1?assessor=A69864"
               target="_blank"
               rel="noopener noreferrer"
-              variant="solid"
               size="sm"
             >
               Invista
             </Button>
-          </Box>
+          </HStack>
         </HStack>
       </Container>
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>

@@ -4,7 +4,7 @@ import { useToast } from '@chakra-ui/react';
 const useCookieToast = (): void => {
   const toast = useToast();
   useEffect(() => {
-    if (typeof localStorage.getItem('cookies') !== 'string') {
+    if (typeof localStorage.getItem('cookies') !== 'string' && !toast.isActive('cookies')) {
       toast({
         id: 'cookies',
         title: 'Cookies',
